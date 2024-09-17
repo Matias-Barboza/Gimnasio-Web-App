@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:ScriptManager runat="server" />
+    <%--<asp:ScriptManager runat="server" />--%>
 
     <asp:UpdatePanel class="position-fixed w-fill-available container-principal" runat="server">
         <ContentTemplate>
@@ -20,10 +20,10 @@
 
             <div class="border rounded m-5 mt-2 p-3 pb-5">
                 <div>
-                    <h2 class="text-center">Listado de socios</h2>
+                    <h2 id="TituloListado" class="text-center" runat="server">Listado de socios</h2>
                     <hr class="mt-0" />
                 </div>
-                <div class="max-height-53-vh overflow-y-scroll table-responsive">
+                <div class="max-height-53-vh overflow-y-scroll table-responsive border rounded">
                     <asp:GridView ID="SociosGridView" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-bordered table-striped table-hover table-group-divider"
                         OnRowCommand="SociosGridView_RowCommand" runat="server">
                         <Columns>

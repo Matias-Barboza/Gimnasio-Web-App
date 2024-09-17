@@ -15,8 +15,11 @@ namespace Gimnasio_Web.Socios
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            TituloListado.InnerText = "Listado de socios";
+
             if (Request.QueryString != null && Request.QueryString["estado"] == "activos") 
             {
+                TituloListado.InnerText += " activos";
                 SoloActivos = true;
                 CargarSocios(SoloActivos);
                 return;
