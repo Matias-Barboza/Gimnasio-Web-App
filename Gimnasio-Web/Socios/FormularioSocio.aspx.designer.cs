@@ -42,6 +42,42 @@ namespace Gimnasio_Web.Socios
         protected global::System.Web.UI.WebControls.TextBox DniSocioTextBox;
 
         /// <summary>
+        /// Control DniRequiredValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator DniRequiredValidator;
+
+        /// <summary>
+        /// Control DniLongitudValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator DniLongitudValidator;
+
+        /// <summary>
+        /// Control DniSoloNumerosValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator DniSoloNumerosValidator;
+
+        /// <summary>
+        /// Control DniUnicoValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator DniUnicoValidator;
+
+        /// <summary>
         /// Control NombreSocioTextBox.
         /// </summary>
         /// <remarks>
@@ -78,22 +114,58 @@ namespace Gimnasio_Web.Socios
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox ConPrimeraCuotaCheckBox;
 
         /// <summary>
-        /// Control TipoCuotaDropDownList.
+        /// Control TiposCuotasDropDownList.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList TipoCuotaDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList TiposCuotasDropDownList;
 
         /// <summary>
-        /// Control CantidadDropDownList.
+        /// Control CantidadTextBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CantidadDropDownList;
+        protected global::System.Web.UI.WebControls.TextBox CantidadTextBox;
+
+        /// <summary>
+        /// Control CalcularButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CalcularButton;
+
+        /// <summary>
+        /// Control CantidadRequiredValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CantidadRequiredValidator;
+
+        /// <summary>
+        /// Control CantidadSoloNumerosValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator CantidadSoloNumerosValidator;
+
+        /// <summary>
+        /// Control MayorACeroValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator MayorACeroValidator;
 
         /// <summary>
         /// Control MontoAbonarTextBox.
