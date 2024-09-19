@@ -28,13 +28,13 @@
                             </div>
                             <div class="ms-2 mb-3">
                                 <asp:RequiredFieldValidator ID="DniRequiredValidator" ErrorMessage="El DNI no puede estar vacío." ControlToValidate="DniSocioTextBox"
-                                    Display="Dynamic" CssClass="validator" runat="server" />
+                                    ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                 <asp:RegularExpressionValidator ID="DniLongitudValidator" ErrorMessage="El DNI solo debe contener de 7 a 8 caracteres." ValidationExpression="^\d{7,8}$"
-                                    ControlToValidate="DniSocioTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                    ControlToValidate="DniSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                 <asp:RegularExpressionValidator ID="DniSoloNumerosValidator" ErrorMessage="El DNI solo debe contener números (sin puntos u otros caracteres)." ValidationExpression="^\d+$" 
-                                    ControlToValidate="DniSocioTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                    ControlToValidate="DniSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                 <asp:CustomValidator ID="DniUnicoValidator" ErrorMessage="El DNI ya se encuentra registrado." OnServerValidate="DniUnicoValidator_ServerValidate"
-                                    ControlToValidate="DniSocioTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                    ControlToValidate="DniSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                             </div>
                         </div>
                         <div class="d-flex">
@@ -46,9 +46,9 @@
                                 <div class="ms-2 mb-3">
                                     <%-- Validators --%>
                                     <asp:RegularExpressionValidator ErrorMessage="El nombre solo puede contener letras." ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                                        ControlToValidate="NombreSocioTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                        ControlToValidate="NombreSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                     <asp:RegularExpressionValidator ErrorMessage="El nombre puede tener un mínimo de 2 y un máximo de 100 caracteres." ValidationExpression="^.{2,100}$"
-                                        ControlToValidate="NombreSocioTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                        ControlToValidate="NombreSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                 </div>
                             </div>
                             <div class="col">
@@ -59,77 +59,92 @@
                                 <div class="ms-3 mb-3">
                                     <%-- Validators --%>
                                     <asp:RegularExpressionValidator ErrorMessage="El apellido solo puede contener letras." ValidationExpression="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                                        ControlToValidate="ApellidoSocioTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                        ControlToValidate="ApellidoSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                     <asp:RegularExpressionValidator ErrorMessage="El apellido puede tener un mínimo de 2 y un máximo de 100 caracteres." ValidationExpression="^.{2,100}$"
-                                        ControlToValidate="ApellidoSocioTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                        ControlToValidate="ApellidoSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                 </div>
                             </div>
                         </div>
                         <p class="form-text ms-1">Los datos marcados con (<span class="text-danger">*</span>) son obligatorios para registrar/editar un socio.</p>
                     </div>
+
+                    <%if (!EsEdicion)
+                      {%>
                     <div class="border rounded my-4 mx-2 p-3">
                         <div class="d-flex justify-content-between align-items-baseline mx-1">
                             <h4>Registrar con primera cuota</h4>
-                            <button id="ConPrimeraCuotaButton" onserverclick="ConPrimeraCuotaButton_ServerClick" class="btn btn-invisible" runat="server">
+                            <button id="ConPrimeraCuotaButton" onserverclick="ConPrimeraCuotaButton_ServerClick" causesValidation="false" class="btn btn-invisible" runat="server">
                                 <input id="ConPrimeraCuotaCheckBox" type="checkbox" class="form-check-input checkbox-xl mt-0 me-1" runat="server" />
                             </button>
                         </div>
                         <%if (ConPrimeraCuota)
-                          {%>
+                            {%>
                         <hr class="mt-0" />
+                        <%-- TIPO DE CUOTA, CANTIDAD Y MONTO A ABONAR --%>
                         <div class="d-flex">
                             <div class="col">
-                                <div class="me-2 mb-1">
+                                <div class="me-2 mb-2">
                                     <label for="TiposCuotasDropDownList" class="form-label">Tipo de cuota<span class="text-danger">*</span></label>
                                     <asp:DropDownList ID="TiposCuotasDropDownList" CssClass="form-select" runat="server"></asp:DropDownList>
                                 </div>
-                                <div class="ms-2 mb-3">
+                                <div>
                                     <%-- Validators --%>
+                                    <asp:CustomValidator ID="TipoCuotaValidator" ErrorMessage="Debe seleccionarse un tipo de cuota válido." OnServerValidate="TipoCuotaValidator_ServerValidate"
+                                        ControlToValidate="TiposCuotasDropDownList" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-2 mb-3" runat="server" />
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="d-flex">
-                                    <div class="w-100 mx-2 mb-1">
+                                    <div class="w-100 mx-2 mb-2">
                                         <label for="CantidadTextBox" class="form-label">Cantidad<span class="text-danger">*</span></label>
                                         <asp:TextBox ID="CantidadTextBox" PlaceHolder="Escriba la cantidad de días, semanas o meses (solo números)" CssClass="form-control" runat="server" ></asp:TextBox>
                                     </div>
-                                    <div class="d-flex align-items-end mx-2 mb-1">
-                                        <asp:Button ID="CalcularButton" Text="Calcular" CssClass="btn btn-primary" runat="server" />
+                                    <div class="d-flex align-items-end me-2 mb-2">
+                                        <asp:Button ID="CalcularButton" OnClick="CalcularButton_Click" Text="Calcular" CausesValidation="false" 
+                                            CssClass="btn btn-primary" runat="server" />
                                     </div>
                                 </div>
-                                <div class="ms-3 mb-3">
+                                <div>
                                     <%-- Validators --%>
                                     <asp:RequiredFieldValidator ID="CantidadRequiredValidator" ErrorMessage="La cantidad no puede estar vacía."
-                                        ControlToValidate="CantidadTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                        ControlToValidate="CantidadTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-3 mb-3" runat="server" />
                                     <asp:RegularExpressionValidator ID="CantidadSoloNumerosValidator" ErrorMessage="La cantidad debe contener unicamente números."
-                                        ValidationExpression="^\d+$" ControlToValidate="CantidadTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                        ValidationExpression="^\d+$" ControlToValidate="CantidadTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-3 mb-3" runat="server" />
                                     <asp:CustomValidator ID="MayorACeroValidator" ErrorMessage="La cantidad debe ser mayor a cero." OnServerValidate="MayorACeroValidator_ServerValidate"
-                                        ControlToValidate="CantidadTextBox" Display="Dynamic" CssClass="validator" runat="server" />
+                                        ControlToValidate="CantidadTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-3 mb-3" runat="server" />
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="mx-2 mb-1">
-                                    <label for="MontoAbonarTextBox" class="form-label">Monto a abonar</label>
+                                <div class="mx-2 mb-2">
+                                    <label for="MontoAbonarTextBox" class="form-label">Monto a abonar<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                       <span class="input-group-text">$</span>
                                       <asp:TextBox ID="MontoAbonarTextBox" ReadOnly="true" PlaceHolder="El monto depende del tipo de cuota y la cantidad" CssClass="form-control" runat="server" ></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="ms-3 mb-3">
+                                <div>
+                                    <%-- Validators --%>
                                     <asp:RequiredFieldValidator ErrorMessage="El monto debe ser calculado para poder registrar el socio." ControlToValidate="MontoAbonarTextBox"
-                                        Display="Dynamic" CssClass="validator" runat="server" />
+                                        ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-3 mb-3" runat="server" />
                                 </div>
                             </div>
                         </div>
+                        <%-- FECHA DE PAGO Y MES --%>
+                        <div class="d-flex">
+                            <%-- Validators --%>
+                            <asp:CustomValidator ID="ValoresCalculadosValidator" ErrorMessage="Hubo cambios en los valores calculados y ya no coindicen, calcule nuevamente."
+                                    OnServerValidate="ValoresCalculadosValidator_ServerValidate" ControlToValidate="" ValidationGroup="OperacionValidationGroup"
+                                    Display="Dynamic" CssClass="validator ms-2 mb-3" runat="server" />
+                        </div>
                         <div class="d-flex">
                             <div class="col">
-                                <div class="me-2 mb-1">
+                                <div class="mt-2 me-2 mb-1">
                                     <label for="FechaPagoTextBox" class="form-label">Fecha de pago</label>
                                     <asp:TextBox ID="FechaPagoTextBox" ReadOnly="true" TextMode="Date" CssClass="form-control" runat="server" ></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="ms-2 mb-1">
+                                <div class="mt-2 ms-2 mb-1">
                                     <label for="MesQueAbonaTextBox" class="form-label">Mes que abona</label>
                                     <asp:TextBox ID="MesQueAbonaTextBox" ReadOnly="true" CssClass="form-control" runat="server" />
                                 </div>
@@ -139,9 +154,16 @@
                         <p class="form-text ms-1">Luego de ingresar la cantidad que corresponda, presione el botón calcular para obtener el monto a abonar.</p>
                         <%}%>
                     </div>
+                    <%}%>
                     <div class="d-flex justify-content-center align-items-center">
-                        <asp:Button Text="Registrar" CssClass="btn btn-primary btn-lg" runat="server" />
-                        <asp:Button Text="Editar" CssClass="btn btn-primary btn-lg" runat="server" />
+                        <%if (!EsEdicion)
+                          {%>
+                        <asp:Button ID="RegistrarSocioButton" Text="Registrar" CausesValidation="true" ValidationGroup="OperacionValidationGroup"
+                            CssClass="btn btn-primary btn-lg" runat="server" />
+                        <%}else{%>
+                        <asp:Button ID="EditarSocioButton" Text="Editar" CausesValidation="true" ValidationGroup="OperacionValidationGroup"
+                            CssClass="btn btn-primary btn-lg" runat="server" />
+                        <%}%>
                     </div>
                 </div>
             </ContentTemplate>

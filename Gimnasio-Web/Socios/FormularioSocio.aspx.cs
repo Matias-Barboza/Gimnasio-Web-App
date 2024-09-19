@@ -12,10 +12,13 @@ namespace Gimnasio_Web.Socios
 {
     public partial class FormularioSocio : System.Web.UI.Page
     {
+        public bool EsEdicion;
         public bool ConPrimeraCuota;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            EsEdicion = true;
+
             if (!IsPostBack) 
             {
                 CargarDropDownListTiposCuotas();
@@ -27,6 +30,7 @@ namespace Gimnasio_Web.Socios
             {
                 ConPrimeraCuota = valorActual;
             }
+
         }
 
         //-------------------------------------------------- MÉTODOS ------------------------------------------------------------------------------------------
@@ -53,7 +57,7 @@ namespace Gimnasio_Web.Socios
                 TiposCuotasDropDownList.DataTextField = "Descripcion";
                 TiposCuotasDropDownList.DataValueField = "Id";
                 TiposCuotasDropDownList.DataBind();
-                TiposCuotasDropDownList.Items.Insert(0, "Seleccione una opción");
+                TiposCuotasDropDownList.Items.Insert(0, new ListItem("Seleccione una opción", "0"));
             }
             catch (Exception)
             {
@@ -61,14 +65,77 @@ namespace Gimnasio_Web.Socios
             }
         }
 
+        public bool TipoCuotaYCantidadValidos() 
+        {
+            TipoCuotaValidator.Validate();
+            CantidadRequiredValidator.Validate();
+            CantidadSoloNumerosValidator.Validate();
+            MayorACeroValidator.Validate();
+
+            return TipoCuotaValidator.IsValid && CantidadRequiredValidator.IsValid && CantidadSoloNumerosValidator.IsValid &&
+                   MayorACeroValidator.IsValid;
+        }
+
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
         protected void ConPrimeraCuotaButton_ServerClick(object sender, EventArgs e)
         {
             ConPrimeraCuota = ConPrimeraCuotaCheckBox.Checked;
             Session.Add("ConPrimeraCuota", ConPrimeraCuota);
+
+            if (!ConPrimeraCuotaCheckBox.Checked && !string.IsNullOrEmpty(MontoAbonarTextBox.Text)) 
+            {
+                MontoAbonarTextBox.Text = string.Empty;
+            }
+        }
+
+        protected void CalcularButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TipoCuotaNegocio tipoCuotaNegocio;
+                List<string> valoresCalculados;
+                string idTipoCuotaStr = TiposCuotasDropDownList.SelectedItem.Value;
+                string cantidadStr = CantidadTextBox.Text;
+                int idTipoCuota;
+                int cantidad;
+
+                if (!TipoCuotaYCantidadValidos()) 
+                {
+                    return;
+                }
+
+                tipoCuotaNegocio = new TipoCuotaNegocio();
+                idTipoCuota = int.Parse(idTipoCuotaStr);
+                cantidad = int.Parse(cantidadStr);
+
+
+                MontoAbonarTextBox.Text = tipoCuotaNegocio.CalcularMontoAbonar(idTipoCuota, cantidad);
+
+                valoresCalculados = new List<string>() { idTipoCuotaStr, cantidadStr, MontoAbonarTextBox.Text };
+
+                Session.Add("ValoresCalculados", valoresCalculados);
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         //-------------------------------------------------- VALIDATORS ---------------------------------------------------------------------------------------
+        protected void TipoCuotaValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                int.TryParse(TiposCuotasDropDownList.SelectedItem.Value, out int idTipoCuota);
+
+                args.IsValid = idTipoCuota > 0;
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
+            }
+        }
+
         protected void DniUnicoValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             try
@@ -100,6 +167,28 @@ namespace Gimnasio_Web.Socios
                 }
 
                 args.IsValid = int.TryParse(CantidadTextBox.Text, out int cantidad) && cantidad > 0;
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
+            }
+        }
+
+        protected void ValoresCalculadosValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                if (Session["ValoresCalculados"] == null) 
+                {
+                    args.IsValid = true;
+                    return;
+                }
+
+                List<string> valoresCalculados = (List<string>) Session["ValoresCalculados"];
+
+                args.IsValid = TiposCuotasDropDownList.SelectedItem.Value == valoresCalculados[0] &&
+                               CantidadTextBox.Text == valoresCalculados[1] &&
+                               MontoAbonarTextBox.Text == valoresCalculados[2];
             }
             catch (Exception)
             {

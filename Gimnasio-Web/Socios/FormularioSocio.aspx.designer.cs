@@ -123,6 +123,15 @@ namespace Gimnasio_Web.Socios
         protected global::System.Web.UI.WebControls.DropDownList TiposCuotasDropDownList;
 
         /// <summary>
+        /// Control TipoCuotaValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator TipoCuotaValidator;
+
+        /// <summary>
         /// Control CantidadTextBox.
         /// </summary>
         /// <remarks>
@@ -177,6 +186,15 @@ namespace Gimnasio_Web.Socios
         protected global::System.Web.UI.WebControls.TextBox MontoAbonarTextBox;
 
         /// <summary>
+        /// Control ValoresCalculadosValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator ValoresCalculadosValidator;
+
+        /// <summary>
         /// Control FechaPagoTextBox.
         /// </summary>
         /// <remarks>
@@ -193,5 +211,23 @@ namespace Gimnasio_Web.Socios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox MesQueAbonaTextBox;
+
+        /// <summary>
+        /// Control RegistrarSocioButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button RegistrarSocioButton;
+
+        /// <summary>
+        /// Control EditarSocioButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button EditarSocioButton;
     }
 }
