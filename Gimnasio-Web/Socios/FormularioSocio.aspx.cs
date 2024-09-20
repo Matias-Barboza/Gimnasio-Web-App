@@ -17,18 +17,29 @@ namespace Gimnasio_Web.Socios
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) 
-            {
-                CargarDropDownListTiposCuotas();
-                ConfigurarFechaYMesActual();
-                return;
-            }
-
-            if (Session["ConPrimeraCuota"] is bool valorActual) 
+            if (Session["ConPrimeraCuota"] is bool valorActual)
             {
                 ConPrimeraCuota = valorActual;
             }
 
+            if (Request.QueryString["id"] is string id && int.TryParse(id, out int idSocioEditar))
+            {
+                TituloFormulario.InnerText = "Formulario de edición de socio";
+
+                EsEdicion = true;
+
+                if (!IsPostBack)
+                {
+                    CargarDatosSocioAEditar(idSocioEditar);
+                }
+            }
+
+            if (!IsPostBack)
+            {
+                CargarDropDownListTiposCuotas();
+                ConfigurarFechaYMesActual();
+                ConfigurarDatosSessionExistentes();
+            }
         }
 
         //-------------------------------------------------- MÉTODOS ------------------------------------------------------------------------------------------
@@ -38,19 +49,19 @@ namespace Gimnasio_Web.Socios
             MesQueAbonaTextBox.Text = DateTime.Today.ToString("MMMM", new CultureInfo("es-ES"));
         }
 
-        public void CargarDropDownListTiposCuotas() 
+        public void CargarDropDownListTiposCuotas()
         {
             try
             {
                 TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
                 List<TipoCuota> listaTiposCuotas = tipoCuotaNegocio.ObtenerTiposCuotaVisibles();
 
-                if (listaTiposCuotas.Count == 0) 
+                if (listaTiposCuotas.Count == 0)
                 {
                     TiposCuotasDropDownList.Items.Insert(0, "No se encontraron tipos de cuotas disponibles");
                     return;
                 }
-                
+
                 TiposCuotasDropDownList.DataSource = listaTiposCuotas;
                 TiposCuotasDropDownList.DataTextField = "Descripcion";
                 TiposCuotasDropDownList.DataValueField = "Id";
@@ -63,6 +74,16 @@ namespace Gimnasio_Web.Socios
             }
         }
 
+        public void ConfigurarDatosSessionExistentes() 
+        {
+            if (Session["ConPrimeraCuota"] is bool valorTrue && valorTrue) 
+            {
+                EliminarDatosSession();
+            }
+
+            ConPrimeraCuota = false;
+        }
+
         public void ValidarTipoCuotaYCantidad()
         {
             TiposCuotasDropDownList.SelectedIndex = 1;
@@ -71,7 +92,7 @@ namespace Gimnasio_Web.Socios
             Page.Validate();
         }
 
-        public void VincularDatosASocio(Socio socio)
+        public void VincularDatosFormularioASocio(Socio socio)
         {
             socio.Dni = DniSocioTextBox.Text;
             socio.Nombre = NombreSocioTextBox.Text;
@@ -90,10 +111,33 @@ namespace Gimnasio_Web.Socios
             cuota.MontoAbonado = decimal.Parse(MontoAbonarTextBox.Text);
         }
 
-        public void EliminarDatosSession() 
+        public void EliminarDatosSession()
         {
             Session.Remove("ConPrimeraCuota");
             Session.Remove("ValoresCalculados");
+        }
+
+        public void CargarDatosSocioAEditar(int idSocioEditar) 
+        {
+            try
+            {
+                SocioNegocio socioNegocio = new SocioNegocio();
+                Socio socioAEditar = socioNegocio.ObtenerSocioPorId(idSocioEditar);
+
+                VincularDatosSocioAFormulario(socioAEditar);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void VincularDatosSocioAFormulario(Socio socioAEditar) 
+        {
+            CodigoSocioTextBox.Text = socioAEditar.Id.ToString();
+            DniSocioTextBox.Text = socioAEditar.Dni;
+            NombreSocioTextBox.Text = socioAEditar.Nombre;
+            ApellidoSocioTextBox.Text = socioAEditar.Apellido;
         }
 
         //-------------------------------------------------- FUNCIONES ----------------------------------------------------------------------------------------
@@ -174,7 +218,7 @@ namespace Gimnasio_Web.Socios
                     return;
                 }
 
-                VincularDatosASocio(socioNuevo);
+                VincularDatosFormularioASocio(socioNuevo);
 
                 idNuevoSocio = socioNegocio.AñadirSocio(socioNuevo);
 
@@ -191,6 +235,34 @@ namespace Gimnasio_Web.Socios
             catch (Exception ex)
             {
                 
+            }
+        }
+
+        protected void EditarSocioButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SocioNegocio socioNegocio = new SocioNegocio();
+                Socio socioEditar = new Socio();
+
+                ValidarTipoCuotaYCantidad();
+
+                if(!Page.IsValid) 
+                {
+                    return;
+                }
+
+                socioEditar.Id = int.Parse(Request.QueryString["id"]);
+
+                VincularDatosFormularioASocio(socioEditar);
+
+                socioNegocio.ActualizarSocio(socioEditar);
+
+                Response.Redirect("/Socios/ListadoSocios.aspx");
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -213,13 +285,25 @@ namespace Gimnasio_Web.Socios
         {
             try
             {
+                SocioNegocio socioNegocio = new SocioNegocio();
+
                 if (!DniRequiredValidator.IsValid || !DniLongitudValidator.IsValid || !DniSoloNumerosValidator.IsValid) 
                 {
                     args.IsValid = true;
                     return;
                 }
 
-                SocioNegocio socioNegocio = new SocioNegocio();
+                if (EsEdicion)
+                {
+                    int idSocio = int.Parse(Request.QueryString["id"]);
+                    bool dniPerteneceASocio = socioNegocio.DniPerteneceASocio(idSocio, DniSocioTextBox.Text);
+                    
+                    if (dniPerteneceASocio) 
+                    {
+                        args.IsValid = true;
+                        return;
+                    }
+                }
 
                 args.IsValid = !socioNegocio.ExisteDniRegistrado(DniSocioTextBox.Text);
             }

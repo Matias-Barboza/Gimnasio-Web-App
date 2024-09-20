@@ -161,8 +161,9 @@
                         <asp:Button ID="RegistrarSocioButton" Text="Registrar" OnClick="RegistrarSocioButton_Click" CausesValidation="true"
                             ValidationGroup="OperacionValidationGroup" CssClass="btn btn-primary btn-lg" runat="server" />
                         <%}else{%>
-                        <asp:Button ID="EditarSocioButton" Text="Editar" CausesValidation="true" ValidationGroup="OperacionValidationGroup"
-                            CssClass="btn btn-primary btn-lg" runat="server" />
+                        <asp:Button ID="EditarSocioButton" Text="Editar" OnClick="EditarSocioButton_Click" CausesValidation="true" ValidationGroup="OperacionValidationGroup"
+                            CssClass="btn btn-primary btn-lg px-4 me-1" runat="server" />
+                        <a href="/Socios/ListadoSocios.aspx" class="btn btn-danger btn-lg ms-1">Cancelar</a>
                         <%}%>
                     </div>
                 </div>

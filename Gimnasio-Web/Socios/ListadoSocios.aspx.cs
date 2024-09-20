@@ -17,7 +17,7 @@ namespace Gimnasio_Web.Socios
         {
             TituloListado.InnerText = "Listado de socios";
 
-            if (Request.QueryString != null && Request.QueryString["estado"] == "activos") 
+            if (Request.QueryString["estado"] != null && Request.QueryString["estado"] == "activos") 
             {
                 TituloListado.InnerText += " activos";
                 SoloActivos = true;
@@ -46,7 +46,13 @@ namespace Gimnasio_Web.Socios
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
         protected void SociosGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName == "EditarSocio") 
+            {
+                int indiceFila = Convert.ToInt32(e.CommandArgument);
+                string idSocio = SociosGridView.DataKeys[indiceFila].Value.ToString();
 
+                Response.Redirect($"/Socios/FormularioSocio.aspx?id={idSocio}");
+            }
         }
 
         protected void BuscarButton_ServerClick(object sender, EventArgs e)
