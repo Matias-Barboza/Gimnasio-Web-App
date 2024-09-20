@@ -158,8 +158,8 @@
                     <div class="d-flex justify-content-center align-items-center">
                         <%if (!EsEdicion)
                           {%>
-                        <asp:Button ID="RegistrarSocioButton" Text="Registrar" CausesValidation="true" ValidationGroup="OperacionValidationGroup"
-                            CssClass="btn btn-primary btn-lg" runat="server" />
+                        <asp:Button ID="RegistrarSocioButton" Text="Registrar" OnClick="RegistrarSocioButton_Click" CausesValidation="true"
+                            ValidationGroup="OperacionValidationGroup" CssClass="btn btn-primary btn-lg" runat="server" />
                         <%}else{%>
                         <asp:Button ID="EditarSocioButton" Text="Editar" CausesValidation="true" ValidationGroup="OperacionValidationGroup"
                             CssClass="btn btn-primary btn-lg" runat="server" />

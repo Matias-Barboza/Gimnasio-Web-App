@@ -17,8 +17,6 @@ namespace Gimnasio_Web.Socios
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            EsEdicion = true;
-
             if (!IsPostBack) 
             {
                 CargarDropDownListTiposCuotas();
@@ -65,6 +63,40 @@ namespace Gimnasio_Web.Socios
             }
         }
 
+        public void ValidarTipoCuotaYCantidad()
+        {
+            TiposCuotasDropDownList.SelectedIndex = 1;
+            CantidadTextBox.Text = "1";
+            MontoAbonarTextBox.Text = "1";
+            Page.Validate();
+        }
+
+        public void VincularDatosASocio(Socio socio)
+        {
+            socio.Dni = DniSocioTextBox.Text;
+            socio.Nombre = NombreSocioTextBox.Text;
+            socio.Apellido = ApellidoSocioTextBox.Text;
+        }
+
+        public void VincularDatosACuota(Cuota cuota, int idSocio)
+        {
+            int cantidad = int.Parse(CantidadTextBox.Text);
+
+            cuota.Socio.Id = idSocio;
+            cuota.TipoCuota.Id = int.Parse(TiposCuotasDropDownList.SelectedItem.Value);
+            cuota.FechaPago = DateTime.Today;
+            cuota.FechaVencimiento = CuotaNegocio.FechaVencimientoCalculada(cuota.FechaPago, cuota.TipoCuota.Id, cantidad);
+            cuota.MesQueAbona = MesQueAbonaTextBox.Text;
+            cuota.MontoAbonado = decimal.Parse(MontoAbonarTextBox.Text);
+        }
+
+        public void EliminarDatosSession() 
+        {
+            Session.Remove("ConPrimeraCuota");
+            Session.Remove("ValoresCalculados");
+        }
+
+        //-------------------------------------------------- FUNCIONES ----------------------------------------------------------------------------------------
         public bool TipoCuotaYCantidadValidos() 
         {
             TipoCuotaValidator.Validate();
@@ -72,8 +104,8 @@ namespace Gimnasio_Web.Socios
             CantidadSoloNumerosValidator.Validate();
             MayorACeroValidator.Validate();
 
-            return TipoCuotaValidator.IsValid && CantidadRequiredValidator.IsValid && CantidadSoloNumerosValidator.IsValid &&
-                   MayorACeroValidator.IsValid;
+            return TipoCuotaValidator.IsValid && CantidadRequiredValidator.IsValid && 
+                   CantidadSoloNumerosValidator.IsValid && MayorACeroValidator.IsValid;
         }
 
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
@@ -114,6 +146,47 @@ namespace Gimnasio_Web.Socios
                 valoresCalculados = new List<string>() { idTipoCuotaStr, cantidadStr, MontoAbonarTextBox.Text };
 
                 Session.Add("ValoresCalculados", valoresCalculados);
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+        protected void RegistrarSocioButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SocioNegocio socioNegocio = new SocioNegocio();
+                CuotaNegocio cuotaNegocio = new CuotaNegocio();
+                int idNuevoSocio;
+                int idCuotaNueva;
+                Socio socioNuevo = new Socio();
+                Cuota cuotaNueva = new Cuota();
+
+                if (!ConPrimeraCuota) 
+                {
+                    ValidarTipoCuotaYCantidad();
+                }
+
+                if (!Page.IsValid) 
+                {
+                    return;
+                }
+
+                VincularDatosASocio(socioNuevo);
+
+                idNuevoSocio = socioNegocio.AñadirSocio(socioNuevo);
+
+                if (ConPrimeraCuota) 
+                {
+                    VincularDatosACuota(cuotaNueva, idNuevoSocio);
+                    idCuotaNueva = cuotaNegocio.AñadirCuota(cuotaNueva);
+                }
+
+                EliminarDatosSession();
+
+                Response.Redirect("/Socios/ListadoSocios.aspx", false);
             }
             catch (Exception ex)
             {
