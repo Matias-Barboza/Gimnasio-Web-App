@@ -31,30 +31,26 @@ namespace Gimnasio_Web.Socios
         //-------------------------------------------------- MÉTODOS ------------------------------------------------------------------------------------------
         public void CargarSocios(bool activos = false, string campoBusqueda = null) 
         {
-            SocioNegocio socioNegocio = new SocioNegocio();
-            List<Socio> listaSocios = socioNegocio.ObtenerSocios(activos, campoBusqueda);
-
-            if (listaSocios.Count == 0) 
+            try
             {
-                return;
-            }
+                SocioNegocio socioNegocio = new SocioNegocio();
+                List<Socio> listaSocios = socioNegocio.ObtenerSocios(activos, campoBusqueda);
 
-            SociosGridView.DataSource = listaSocios;
-            SociosGridView.DataBind();
+                if (listaSocios.Count == 0) 
+                {
+                    return;
+                }
+
+                SociosGridView.DataSource = listaSocios;
+                SociosGridView.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
-        protected void SociosGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "EditarSocio") 
-            {
-                int indiceFila = Convert.ToInt32(e.CommandArgument);
-                string idSocio = SociosGridView.DataKeys[indiceFila].Value.ToString();
-
-                Response.Redirect($"/Socios/FormularioSocio.aspx?id={idSocio}");
-            }
-        }
-
         protected void BuscarButton_ServerClick(object sender, EventArgs e)
         {
             string campoBusqueda = CampoBusquedaTextBox.Text;
@@ -65,5 +61,15 @@ namespace Gimnasio_Web.Socios
             }
         }
 
+        protected void SociosGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "EditarSocio") 
+            {
+                int indiceFila = Convert.ToInt32(e.CommandArgument);
+                string idSocio = SociosGridView.DataKeys[indiceFila].Value.ToString();
+
+                Response.Redirect($"/Socios/FormularioSocio.aspx?id={idSocio}");
+            }
+        }
     }
 }
