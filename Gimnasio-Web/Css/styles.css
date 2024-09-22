@@ -36,21 +36,8 @@
     max-height: 53vh;
 }
 
-.has-icon a {
+.font-family-bootstrap-icons {
     font-family: bootstrap-icons !important;
-    border: 1px solid #ffc107;
-    border-radius: .375rem;
-    text-decoration: none;
-    padding: 5px;
-    color: #fff;
-    background-color: #ffc107;
-    font-size: 1.2rem;
-    transition: .2s;
-}
-
-.has-icon a:hover {
-    background-color: #ffe30c;
-    border-color: #ffe30c;
 }
 
 /*************************************************************************************************************************************************************/
