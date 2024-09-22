@@ -21,7 +21,7 @@
                     <h2 id="TituloListado" class="text-center" runat="server">Listado de socios</h2>
                     <hr class="mt-0" />
                 </div>
-                <div class="max-height-53-vh overflow-y-scroll table-responsive border rounded">
+                <div class="max-min-height-53-vh overflow-y-scroll table-responsive border rounded">
                     <asp:GridView ID="SociosGridView" DataKeyNames="Id" AutoGenerateColumns="false" OnRowCommand="SociosGridView_RowCommand"
                         CssClass="table table-bordered table-striped table-hover table-group-divider" HeaderStyle-CssClass="table-dark" runat="server">
                         <Columns>

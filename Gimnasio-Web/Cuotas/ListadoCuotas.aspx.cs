@@ -1,0 +1,114 @@
+﻿using Gimnasio_Dominio;
+using Gimnasio_Negocio;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Gimnasio_Web.Cuotas
+{
+    public partial class ListadoCuotas : System.Web.UI.Page
+    {
+        public bool SoloVencidas;
+        public bool SoloProximasAVencerse;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            TituloListado.InnerText = "Listado de cuotas";
+
+            if (Request.QueryString.Count != 0)
+            {
+
+                if (Request.QueryString["estado"] == "vencidas") 
+                {
+                    TituloListado.InnerText += " vencidas";
+                    SoloVencidas = true;
+                    CargarCuotas(soloVencidas: SoloVencidas);
+                    return;
+                }
+
+                if (Request.QueryString["estado"] == "proximas") 
+                {
+                    TituloListado.InnerText += " próximas a vencerse";
+                    SoloProximasAVencerse = true;
+                    CargarCuotas(soloProximasAVencerse: SoloProximasAVencerse);
+                    return;
+                }
+            }
+
+            CargarCuotas();
+        }
+
+        //-------------------------------------------------- MÉTODOS ------------------------------------------------------------------------------------------
+        private void CargarCuotas(bool soloVencidas = false, bool soloProximasAVencerse = false, string campoBusqueda = null)
+        {
+            try
+            {
+                CuotaNegocio cuotaNegocio = new CuotaNegocio();
+                List<Cuota> listaCuotas = cuotaNegocio.ObtenerCuotasConSocioYTipo(soloVencidas, soloProximasAVencerse, campoBusqueda);
+
+                if (listaCuotas.Count == 0) 
+                {
+                    return;
+                }
+
+                CuotasGridView.DataSource = listaCuotas;
+                CuotasGridView.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void VincularDatosSocio(int idCuota) 
+        {
+            try
+            {
+                CuotaNegocio cuotaNegocio = new CuotaNegocio();
+                Cuota cuota = cuotaNegocio.ObtenerCuotaConSocioYTipoPorIdCuota(idCuota);
+
+                if (cuota.Id != 0) 
+                {
+                    CodigoSocioTextBox.Text = cuota.Socio.Id.ToString();
+                    NombreSocioTextBox.Text = cuota.Socio.Nombre;
+                    ApellidoSocioTextBox.Text = cuota.Socio.Apellido;
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+        //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
+        protected void BuscarButton_ServerClick(object sender, EventArgs e)
+        {
+            string campoBusqueda = CampoBusquedaTextBox.Text;
+
+            if (!string.IsNullOrEmpty(campoBusqueda))
+            {
+                CargarCuotas(SoloVencidas, SoloProximasAVencerse, campoBusqueda);
+            }
+        }
+
+        protected void CuotasGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int indiceFila = Convert.ToInt32(e.CommandArgument);
+            int idCuota = Convert.ToInt32(CuotasGridView.DataKeys[indiceFila].Value);
+
+            if (e.CommandName == "EditarCuota") 
+            {
+
+                Response.Redirect($"/Cuotas/FormularioCuota.aspx?id={idCuota}", true);
+            }
+
+            if (e.CommandName == "VerSocio") 
+            {
+                VincularDatosSocio(idCuota);
+            }
+        }
+    }
+}
