@@ -13,32 +13,32 @@ namespace Gimnasio_Web.Cuotas
     {
         public bool SoloVencidas;
         public bool SoloProximasAVencerse;
+        public bool MostrarResultadoBusqueda;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             TituloListado.InnerText = "Listado de cuotas";
 
-            if (Request.QueryString.Count != 0)
+            if (Request.QueryString["estado"] != null)
             {
 
                 if (Request.QueryString["estado"] == "vencidas") 
                 {
                     TituloListado.InnerText += " vencidas";
                     SoloVencidas = true;
-                    CargarCuotas(soloVencidas: SoloVencidas);
-                    return;
                 }
 
                 if (Request.QueryString["estado"] == "proximas") 
                 {
                     TituloListado.InnerText += " próximas a vencerse";
                     SoloProximasAVencerse = true;
-                    CargarCuotas(soloProximasAVencerse: SoloProximasAVencerse);
-                    return;
                 }
             }
 
-            CargarCuotas();
+            if (!IsPostBack) 
+            {
+                CargarCuotas(soloVencidas: SoloVencidas, soloProximasAVencerse: SoloProximasAVencerse);
+            }
         }
 
         //-------------------------------------------------- MÉTODOS ------------------------------------------------------------------------------------------
@@ -48,6 +48,11 @@ namespace Gimnasio_Web.Cuotas
             {
                 CuotaNegocio cuotaNegocio = new CuotaNegocio();
                 List<Cuota> listaCuotas = cuotaNegocio.ObtenerCuotasConSocioYTipo(soloVencidas, soloProximasAVencerse, campoBusqueda);
+                
+                if (MostrarResultadoBusqueda) 
+                {
+                    ResultadoBusquedaLabel.InnerText = listaCuotas.Count().ToString();                
+                }
 
                 if (listaCuotas.Count == 0) 
                 {
@@ -90,8 +95,12 @@ namespace Gimnasio_Web.Cuotas
 
             if (!string.IsNullOrEmpty(campoBusqueda))
             {
+                MostrarResultadoBusqueda = true;
                 CargarCuotas(SoloVencidas, SoloProximasAVencerse, campoBusqueda);
+                return;
             }
+
+            CargarCuotas();
         }
 
         protected void CuotasGridView_RowCommand(object sender, GridViewCommandEventArgs e)

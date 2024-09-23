@@ -7,8 +7,12 @@
         <ContentTemplate>
             <div class="border rounded mt-4 mx-5 mb-3 p-3">
                 <div class="d-flex">
-                    <asp:TextBox ID="CampoBusquedaTextBox" CssClass="form-control" runat="server" />
-                    <button id="BuscarButton" type="button" onserverclick="BuscarButton_ServerClick" class="d-flex btn btn-primary py-1 ms-2" runat="server">
+                    <asp:TextBox ID="CampoBusquedaTextBox" CssClass="form-control me-1" runat="server" />
+                    <%if (MostrarResultadoBusqueda)
+                      {%>
+                    <label id="ResultadoBusquedaLabel" class="badge text-bg-secondary d-flex align-items-center" runat="server"></label>
+                    <%}%>
+                    <button id="BuscarButton" type="button" onserverclick="BuscarButton_ServerClick" class="d-flex btn btn-primary py-1 ms-1" runat="server">
                         <i class="bi bi-search me-2"></i>
                         Buscar
                     </button>
@@ -33,9 +37,10 @@
                             <asp:BoundField DataField="Id" HeaderText="Código de cuota" ItemStyle-VerticalAlign="Middle" />
                             <asp:BoundField DataField="FechaPago" HeaderText="Fecha de pago" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:d}" />
                             <asp:BoundField DataField="FechaVencimiento" HeaderText="Fecha de vencimiento" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:d}" />
-                            <asp:BoundField DataField="MesQueAbona" HeaderText="Mes abonado" ItemStyle-VerticalAlign="Middle"/>
-                            <asp:BoundField DataField="TipoCuota.Descripcion" HeaderText="Tipo de cuota" ItemStyle-VerticalAlign="Middle"/>
-                            <asp:BoundField DataField="MontoAbonado" HeaderText="MontoAbonado" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:C2}"/>
+                            <asp:BoundField DataField="MesQueAbona" HeaderText="Mes abonado" ItemStyle-VerticalAlign="Middle" />
+                            <asp:BoundField DataField="TipoCuota.Descripcion" HeaderText="Tipo de cuota" ItemStyle-VerticalAlign="Middle" />
+                            <asp:BoundField DataField="MontoAbonado" HeaderText="Monto abonado" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:C2}" />
+                            <asp:BoundField DataField="Socio.Id" HeaderText="Código de socio" ItemStyle-VerticalAlign="Middle" />
                             <asp:ButtonField ButtonType="Button" Text="&#xF341;" HeaderText="Ver socio" AccessibleHeaderText="Ver socio" ItemStyle-HorizontalAlign="center"
                                 CommandName="VerSocio" ControlStyle-CssClass="btn btn-primary fs-5 font-family-bootstrap-icons py-0 px-1" />
                             <asp:ButtonField ButtonType="Button" Text="&#xF4CA;" HeaderText="Editar cuota" AccessibleHeaderText="Editar cuota" ItemStyle-HorizontalAlign="center"
