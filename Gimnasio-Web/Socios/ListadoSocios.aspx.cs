@@ -12,6 +12,7 @@ namespace Gimnasio_Web.Socios
     public partial class ListadoSocios : System.Web.UI.Page
     {
         public bool SoloActivos;
+        public bool MostrarResultadoBusqueda;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,11 +22,12 @@ namespace Gimnasio_Web.Socios
             {
                 TituloListado.InnerText += " activos";
                 SoloActivos = true;
-                CargarSocios(SoloActivos);
-                return;
             }
 
-            CargarSocios();
+            if (!IsPostBack) 
+            {
+                CargarSocios(activos: SoloActivos);
+            }
         }
 
         //-------------------------------------------------- MÉTODOS ------------------------------------------------------------------------------------------
@@ -35,6 +37,11 @@ namespace Gimnasio_Web.Socios
             {
                 SocioNegocio socioNegocio = new SocioNegocio();
                 List<Socio> listaSocios = socioNegocio.ObtenerSocios(activos, campoBusqueda);
+
+                if (MostrarResultadoBusqueda) 
+                {
+                    ResultadoBusquedaLabel.InnerText = listaSocios.Count.ToString();
+                }
 
                 if (listaSocios.Count == 0) 
                 {
@@ -57,8 +64,12 @@ namespace Gimnasio_Web.Socios
 
             if (!string.IsNullOrEmpty(campoBusqueda)) 
             {
+                MostrarResultadoBusqueda = true;
                 CargarSocios(SoloActivos, campoBusqueda);
+                return;
             }
+
+            CargarSocios(SoloActivos);
         }
 
         protected void SociosGridView_RowCommand(object sender, GridViewCommandEventArgs e)
