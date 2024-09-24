@@ -17,7 +17,7 @@
                         Buscar
                     </button>
                 </div>
-                <p class="form-text form-text mt-1 mb-0 ms-2">Búsqueda por código de socio, DNI, nombre y/o apellido.</p>
+                <p class="form-text form-text mt-1 mb-0 ms-2">Búsqueda por código de socio, DNI o nombre y/o apellido.</p>
             </div>
 
             <div class="border rounded m-5 mt-2 p-3 pb-5">

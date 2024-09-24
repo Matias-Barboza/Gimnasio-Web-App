@@ -17,7 +17,8 @@
                         Buscar
                     </button>
                 </div>
-                <p class="form-text form-text mt-1 mb-0 ms-2">Búsqueda por código de cuota, tipo de cuota, fecha de pago, fecha de vencimiento, mes abonado.</p>
+                <p class="form-text form-text mt-1 mb-0 ms-2">Búsqueda por código de cuota, tipo de cuota, fecha de pago, fecha de vencimiento, mes abonado, monto abonado o código de socio.</p>
+                <p class="form-text form-text mt-0 mb-0 ms-2">Formato de fecha: (dd/MM/aaaa), (dd-MM-aaaa).</p>
             </div>
 
             <div class="border rounded mt-2 mx-5 mb-3 p-3">
