@@ -267,20 +267,6 @@ namespace Gimnasio_Web.Socios
         }
 
         //-------------------------------------------------- VALIDATORS ---------------------------------------------------------------------------------------
-        protected void TipoCuotaValidator_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            try
-            {
-                int.TryParse(TiposCuotasDropDownList.SelectedItem.Value, out int idTipoCuota);
-
-                args.IsValid = idTipoCuota > 0;
-            }
-            catch (Exception)
-            {
-                args.IsValid = false;
-            }
-        }
-
         protected void DniUnicoValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             try
@@ -312,6 +298,21 @@ namespace Gimnasio_Web.Socios
                 args.IsValid = false;
             }
         }
+
+        protected void TipoCuotaValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                int.TryParse(TiposCuotasDropDownList.SelectedItem.Value, out int idTipoCuota);
+
+                args.IsValid = idTipoCuota > 0;
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
+            }
+        }
+
 
         protected void MayorACeroValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {

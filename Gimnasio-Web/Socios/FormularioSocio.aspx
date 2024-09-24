@@ -27,6 +27,7 @@
                                 <label for="DniSocioTextBox">DNI<span class="text-danger">*</span></label>
                             </div>
                             <div class="ms-2 mb-3">
+                                <%-- Validators --%>
                                 <asp:RequiredFieldValidator ID="DniRequiredValidator" ErrorMessage="El DNI no puede estar vacío." ControlToValidate="DniSocioTextBox"
                                     ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
                                 <asp:RegularExpressionValidator ID="DniLongitudValidator" ErrorMessage="El DNI solo debe contener de 7 a 8 caracteres." ValidationExpression="^\d{7,8}$"
@@ -129,13 +130,13 @@
                                 </div>
                             </div>
                         </div>
-                        <%-- FECHA DE PAGO Y MES --%>
                         <div class="d-flex">
                             <%-- Validators --%>
                             <asp:CustomValidator ID="ValoresCalculadosValidator" ErrorMessage="Hubo cambios en los valores calculados y ya no coindicen, calcule nuevamente."
                                     OnServerValidate="ValoresCalculadosValidator_ServerValidate" ControlToValidate="" ValidationGroup="OperacionValidationGroup"
                                     Display="Dynamic" CssClass="validator ms-2 mb-3" runat="server" />
                         </div>
+                        <%-- FECHA DE PAGO Y MES --%>
                         <div class="d-flex">
                             <div class="col">
                                 <div class="mt-2 me-2 mb-1">
