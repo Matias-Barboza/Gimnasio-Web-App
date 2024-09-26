@@ -42,6 +42,33 @@ namespace Gimnasio_Web.Cuotas
         protected global::System.Web.UI.HtmlControls.HtmlButton BuscarButton;
 
         /// <summary>
+        /// Control CodigoSocioNoVacioValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CodigoSocioNoVacioValidator;
+
+        /// <summary>
+        /// Control CodigoSocioSoloNumerosValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator CodigoSocioSoloNumerosValidator;
+
+        /// <summary>
+        /// Control CodigoSocioExistenteValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CodigoSocioExistenteValidator;
+
+        /// <summary>
         /// Control DniSocioTextBox.
         /// </summary>
         /// <remarks>
@@ -76,6 +103,24 @@ namespace Gimnasio_Web.Cuotas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox EstaActivoCheckBox;
+
+        /// <summary>
+        /// Control SocioBuscadoValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator SocioBuscadoValidator;
+
+        /// <summary>
+        /// Control DatosSocioBuscadoValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator DatosSocioBuscadoValidator;
 
         /// <summary>
         /// Control TiposCuotasDropDownList.

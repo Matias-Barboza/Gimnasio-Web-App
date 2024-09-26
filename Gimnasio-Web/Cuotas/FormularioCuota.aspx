@@ -17,19 +17,25 @@
                         <hr class="mt-0" />
                         <div class="mb-2">
                             <label for="CodigoSocioTextBox" class="ms-1 mb-1">Código de socio<span class="text-danger">*</span></label>
-                            <div class="d-flex align-items-baseline">
-                                <asp:TextBox ID="CodigoSocioTextBox" PlaceHolder="Código de socio" CssClass="form-control" runat="server" ></asp:TextBox>
-                                <button id="BuscarButton" type="button" onserverclick="BuscarButton_ServerClick" class="d-flex align-items-center btn btn-primary py-1 ms-1" runat="server">
-                                    <i class="bi bi-search me-2"></i>
-                                    Buscar socio
-                                </button>
+                            <div class="d-flex align-items-center">
+                                <div class="col">
+                                    <asp:TextBox ID="CodigoSocioTextBox" PlaceHolder="Código de socio" CssClass="form-control" runat="server" ></asp:TextBox>
+                                </div>
+                                <div>
+                                    <button id="BuscarButton" type="button" onserverclick="BuscarButton_ServerClick" class="btn btn-primary ms-2" runat="server">
+                                        <i class="bi bi-search me-2"></i>
+                                        Buscar socio
+                                    </button>
+                                </div>
                             </div>
                             <div>
                                 <%-- Validators --%>
-                                <asp:RequiredFieldValidator ErrorMessage="El código de socio no puede estar vacío." ControlToValidate="CodigoSocioTextBox"
-                                        ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
-                                <asp:RegularExpressionValidator ErrorMessage="El código de socio solo debe contener números (sin puntos u otros caracteres)." ValidationExpression="^\d+$" 
-                                        ControlToValidate="CodigoSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator" runat="server" />
+                                <asp:RequiredFieldValidator ID="CodigoSocioNoVacioValidator" ErrorMessage="El código de socio no puede estar vacío." ControlToValidate="CodigoSocioTextBox"
+                                        ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-2" runat="server" />
+                                <asp:RegularExpressionValidator ID="CodigoSocioSoloNumerosValidator" ErrorMessage="El código de socio solo debe contener números (sin puntos u otros caracteres)." ValidationExpression="^\d+$" 
+                                        ControlToValidate="CodigoSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-2" runat="server" />
+                                <asp:CustomValidator ID="CodigoSocioExistenteValidator" ErrorMessage="No se encontró ningún socio con el código indicado." OnServerValidate="CodigoSocioExistenteValidator_ServerValidate"
+                                        ControlToValidate="CodigoSocioTextBox" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-2" runat="server" />
                             </div>
                         </div>
                         <div class="d-flex mt-1 mb-2">
@@ -52,7 +58,12 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="form-text ms-1">Los datos marcados con (<span class="text-danger">*</span>) son obligatorios para registrar/editar una cuota.</p>
+                        <div class="d-flex">
+                            <asp:CustomValidator ID="SocioBuscadoValidator" ErrorMessage="Debe buscar un socio a asociar para poder registrar la cuota."
+                                   OnServerValidate="SocioBuscadoValidator_ServerValidate" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-2 mb-3"  runat="server" />
+                            <asp:CustomValidator ID="DatosSocioBuscadoValidator" ErrorMessage="Los datos actuales no coinciden con el último socio buscado, realice la búsqueda nuevamente."
+                                   OnServerValidate="DatosSocioBuscadoValidator_ServerValidate" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-2 mb-3"  runat="server" />
+                        </div>
                     
                         <h4>Datos de la cuota</h4>
                         <hr class="mt-0" />
@@ -121,7 +132,7 @@
                                 <div>
                                     <%-- Validators --%>
                                     <asp:CustomValidator ID="FechaValidaValidator" ErrorMessage="La fecha de pago es obligatoria." OnServerValidate="FechaValidaValidator_ServerValidate"
-                                            ControlToValidate="FechaPagoTextBox" ValidationGroup="OperacionValidationGroup" ValidateEmptyText="true" Display="Dynamic" CssClass="validator" runat="server" />
+                                            ControlToValidate="FechaPagoTextBox" ValidationGroup="OperacionValidationGroup" ValidateEmptyText="true" Display="Dynamic" CssClass="validator ms-2" runat="server" />
                                 </div>
                             </div>
                             <div class="col">
@@ -136,8 +147,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="form-text ms-1 mb-0">Los datos marcados con (<span class="text-danger">*</span>) son obligatorios para registrar una cuota.</p>
-                        <p class="form-text ms-1 mb-0">Luego de ingresar la cantidad que corresponda, presione el botón calcular para obtener el monto a abonar.</p>
+                        <p class="form-text ms-1 mb-0">Los datos marcados con (<span class="text-danger">*</span>) son obligatorios para registrar/editar una cuota.</p>
+                        <p class="form-text ms-1 mb-0">Luego de ingresar la cantidad que corresponda, presione el botón "calcular" para obtener el monto a abonar.</p>
                         <p class="form-text ms-1">El sistema pondrá como fecha de pago la fecha de vencimiento de la última cuota encontrada. De lo contrario será la fecha actual.</p>
                     </div>
 

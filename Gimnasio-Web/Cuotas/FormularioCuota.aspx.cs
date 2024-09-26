@@ -17,6 +17,7 @@ namespace Gimnasio_Web.Cuotas
             if (!IsPostBack) 
             {
                 CargarDropDownListTiposCuotas();
+                EliminarDatosSession();
             }
         }
 
@@ -67,6 +68,27 @@ namespace Gimnasio_Web.Cuotas
             MesQueAbonaTextBox.Text = cuota.FechaVencimiento.ToString("MMMM", new CultureInfo("es-ES"));
         }
 
+        public void VincularDatosACuota(Cuota cuota, bool conSocioSession = false) 
+        {
+            int cantidad = Convert.ToInt32(CantidadTextBox.Text);
+
+            if (conSocioSession) 
+            {
+                cuota.Socio = (Socio)Session["SocioBuscado"];
+            }
+
+            cuota.TipoCuota.Id = Convert.ToInt32(TiposCuotasDropDownList.SelectedItem.Value);
+            cuota.FechaPago = DateTime.Parse(FechaPagoTextBox.Text);
+            cuota.FechaVencimiento = CuotaNegocio.FechaVencimientoCalculada(cuota.FechaPago, cuota.TipoCuota.Id, cantidad);
+            cuota.MesQueAbona = MesQueAbonaTextBox.Text;
+            cuota.MontoAbonado = decimal.Parse(MontoAbonarTextBox.Text);
+        }
+
+        public void EliminarDatosSession() 
+        {
+            Session.Remove("SocioBuscado");
+        }
+
         //-------------------------------------------------- FUNCIONES ----------------------------------------------------------------------------------------
         public bool TipoCuotaYCantidadValidos()
         {
@@ -77,6 +99,15 @@ namespace Gimnasio_Web.Cuotas
 
             return TipoCuotaValidator.IsValid && CantidadRequiredValidator.IsValid &&
                    CantidadSoloNumerosValidator.IsValid && MayorACeroValidator.IsValid;
+        }
+
+        public bool CodigoSocioValido() 
+        {
+            CodigoSocioNoVacioValidator.Validate();
+            CodigoSocioSoloNumerosValidator.Validate();
+            CodigoSocioExistenteValidator.Validate();
+
+            return CodigoSocioNoVacioValidator.IsValid && CodigoSocioSoloNumerosValidator.IsValid && CodigoSocioExistenteValidator.IsValid;
         }
 
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
@@ -90,7 +121,15 @@ namespace Gimnasio_Web.Cuotas
                 CuotaNegocio cuotaNegocio = new CuotaNegocio();
                 Cuota cuota = cuotaNegocio.ObtenerUltimaCuotaPorIdSocio(idSocio);
 
+                CodigoSocioValido();
+
+                if (!Page.IsValid) 
+                {
+                    return;
+                }
+
                 VincularDatosSocioAFormulario(socio);
+                Session.Add("SocioBuscado", socio);
 
                 //Si no está activo es como si volviera a empezar de 0, o si no tiene una ultima cuota encontrada, la fecha y mes, van a ser la actual
                 if (!socio.EstaActivo || cuota.Id == 0) 
@@ -142,7 +181,28 @@ namespace Gimnasio_Web.Cuotas
 
         protected void RegistrarCuotaButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                CuotaNegocio cuotaNegocio = new CuotaNegocio();
+                Cuota cuota = new Cuota();
 
+                if (!Page.IsValid) 
+                {
+                    return;
+                }
+
+                VincularDatosACuota(cuota,true);
+
+                int idCuotaNueva = cuotaNegocio.AñadirCuota(cuota);
+
+                EliminarDatosSession();
+
+                Response.Redirect("/Cuotas/ListadoCuotas.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         protected void EditarCuotaButton_Click(object sender, EventArgs e)
@@ -151,6 +211,64 @@ namespace Gimnasio_Web.Cuotas
         }
 
         //-------------------------------------------------- VALIDATORS ---------------------------------------------------------------------------------------
+        protected void CodigoSocioExistenteValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                if (!CodigoSocioNoVacioValidator.IsValid || !CodigoSocioSoloNumerosValidator.IsValid) 
+                {
+                    args.IsValid = true;
+                    return;
+                }
+
+                int idSocio = Convert.ToInt32(CodigoSocioTextBox.Text);
+                SocioNegocio socioNegocio = new SocioNegocio();
+                Socio socio = socioNegocio.ObtenerSocioPorId(idSocio);
+
+                args.IsValid = socio.Id != 0;
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
+            }
+        }
+
+        protected void SocioBuscadoValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                if (!CodigoSocioNoVacioValidator.IsValid || !CodigoSocioSoloNumerosValidator.IsValid || !CodigoSocioExistenteValidator.IsValid) 
+                {
+                    args.IsValid = true;
+                    return;
+                }
+
+                args.IsValid = Session["SocioBuscado"] != null; 
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
+            }
+        }
+
+        protected void DatosSocioBuscadoValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                if (Session["SocioBuscado"] is Socio socio) 
+                {
+                    args.IsValid = CodigoSocioTextBox.Text == socio.Id.ToString() &&
+                                   DniSocioTextBox.Text == socio.Dni &&
+                                   NombreSocioTextBox.Text == socio.Nombre &&
+                                   ApellidoSocioTextBox.Text == socio.Apellido;
+                }
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
+            }
+        }
+
         protected void TipoCuotaValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             try
