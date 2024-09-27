@@ -38,7 +38,13 @@
                             <asp:BoundField DataField="Dni" HeaderText="DNI" ItemStyle-VerticalAlign="Middle" />
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre" ItemStyle-VerticalAlign="Middle" />
                             <asp:BoundField DataField="Apellido" HeaderText="Apellido" ItemStyle-VerticalAlign="Middle"/>
-                            <asp:CheckBoxField DataField="EstaActivo" HeaderText="Activo" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="center"/>
+                            <asp:TemplateField HeaderText="Activo" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <input type="checkbox" class="form-check-input" checked='<%#Eval("EstaActivo") %>' disabled="disabled" runat="server"/>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:ButtonField ButtonType="Button" Text="&#xF341;" HeaderText="Pasar a activo/inactivo" AccessibleHeaderText="Cambiar estado de actividad"
+                                ItemStyle-HorizontalAlign="center" CommandName="CambiarEstadoSocio" ControlStyle-CssClass="btn btn-primary text-white fs-5 font-family-bootstrap-icons py-0 px-1" />
                             <asp:ButtonField ButtonType="Button" Text="&#xF4CA;" HeaderText="Editar socio" AccessibleHeaderText="Editar socio" ItemStyle-HorizontalAlign="center"
                                 CommandName="EditarSocio" ControlStyle-CssClass="btn btn-warning text-white fs-5 font-family-bootstrap-icons py-0 px-1" />
                         </Columns>

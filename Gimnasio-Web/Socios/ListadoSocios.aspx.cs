@@ -57,6 +57,14 @@ namespace Gimnasio_Web.Socios
             }
         }
 
+        public void CambiarEstadoSocio(int idSocio) 
+        {
+            SocioNegocio socioNegocio = new SocioNegocio();
+            Socio socio = socioNegocio.ObtenerSocioPorId(idSocio);
+
+            socioNegocio.ActualizarEstadoActividadSocio(socio);
+        }
+
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
         protected void BuscarButton_ServerClick(object sender, EventArgs e)
         {
@@ -74,12 +82,18 @@ namespace Gimnasio_Web.Socios
 
         protected void SociosGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int indiceFila = Convert.ToInt32(e.CommandArgument);
+            int idSocio = Convert.ToInt32(SociosGridView.DataKeys[indiceFila].Value);
+
             if (e.CommandName == "EditarSocio") 
             {
-                int indiceFila = Convert.ToInt32(e.CommandArgument);
-                string idSocio = SociosGridView.DataKeys[indiceFila].Value.ToString();
-
                 Response.Redirect($"/Socios/FormularioSocio.aspx?id={idSocio}");
+            }
+
+            if (e.CommandName == "CambiarEstadoSocio")
+            {
+                CambiarEstadoSocio(idSocio);
+                CargarSocios(SoloActivos);
             }
         }
     }
