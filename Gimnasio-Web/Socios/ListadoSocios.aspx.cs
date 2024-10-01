@@ -59,10 +59,17 @@ namespace Gimnasio_Web.Socios
 
         public void CambiarEstadoSocio(int idSocio) 
         {
-            SocioNegocio socioNegocio = new SocioNegocio();
-            Socio socio = socioNegocio.ObtenerSocioPorId(idSocio);
+            try
+            {
+                SocioNegocio socioNegocio = new SocioNegocio();
+                Socio socio = socioNegocio.ObtenerSocioPorId(idSocio);
 
-            socioNegocio.ActualizarEstadoActividadSocio(socio);
+                socioNegocio.ActualizarEstadoActividadSocio(socio);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
@@ -88,12 +95,6 @@ namespace Gimnasio_Web.Socios
             if (e.CommandName == "EditarSocio") 
             {
                 Response.Redirect($"/Socios/FormularioSocio.aspx?id={idSocio}");
-            }
-
-            if (e.CommandName == "CambiarEstadoSocio")
-            {
-                CambiarEstadoSocio(idSocio);
-                CargarSocios(SoloActivos);
             }
         }
     }
