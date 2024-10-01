@@ -152,7 +152,7 @@
                             </div>
                         </div>
                         <p class="form-text ms-1 mb-0">Los datos marcados con (<span class="text-danger">*</span>) son obligatorios para registrar un socio.</p>
-                        <p class="form-text ms-1">Luego de ingresar la cantidad que corresponda, presione el botón calcular para obtener el monto a abonar.</p>
+                        <p class="form-text ms-1">Luego de ingresar la cantidad que corresponda, presione el botón 'calcular' para obtener el monto a abonar.</p>
                         <%}%>
                     </div>
                     <%}%>
