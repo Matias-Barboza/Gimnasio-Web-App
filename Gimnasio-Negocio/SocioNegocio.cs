@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,47 @@ namespace Gimnasio_Negocio
 {
     public class SocioNegocio
     {
+        public int AñadirSocio(Socio socio) 
+        {
+            SociosTableAdapter sociosTableAdapter = new SociosTableAdapter();
+
+            return (int) sociosTableAdapter.AñadirSocio(socio.Dni, socio.Nombre, socio.Apellido);
+        }
+
+        public int ActualizarSocio(Socio socio) 
+        {
+            SociosTableAdapter sociosTableAdapter = new SociosTableAdapter();
+
+            return sociosTableAdapter.ActualizarSocio(socio.Dni, socio.Nombre, socio.Apellido, socio.Id);
+        }
+
+        public bool ActualizarEstadoActividadSocio(Socio socio) 
+        {
+            SociosTableAdapter sociosTableAdapter = new SociosTableAdapter();
+            
+            return (int) sociosTableAdapter.ActualizarEstadoActividadSocio(!socio.EstaActivo, socio.Id) == 1;
+        }
+
+        public Socio ObtenerSocioPorId(int idSocio) 
+        {
+            SociosTableAdapter sociosTableAdapter = new SociosTableAdapter();
+            DataTable sociosDataTable = sociosTableAdapter.ObtenerSocioPorId(idSocio);
+            Socio socioEncontrado = new Socio();
+
+            if (sociosDataTable.Rows.Count != 0) 
+            {
+                DataSetGimnasio.SociosRow socioFila = (DataSetGimnasio.SociosRow) sociosDataTable.Rows[0];
+
+                socioEncontrado.Id = socioFila.id;
+                socioEncontrado.Dni = socioFila.dni;
+                socioEncontrado.Nombre = socioFila.nombre;
+                socioEncontrado.Apellido = socioFila.apellido;
+                socioEncontrado.EstaActivo = socioFila.esta_activo;
+            }
+
+            return socioEncontrado;
+        }
+
         public List<Socio> ObtenerSociosActivos()
         {
             SociosTableAdapter sociosTableAdapter = new SociosTableAdapter();
@@ -91,6 +133,20 @@ namespace Gimnasio_Negocio
             }
 
             return listaSocios;
+        }
+
+        public bool DniPerteneceASocio(int idSocio, string dniAComprobar)  
+        {
+            SociosTableAdapter sociosTableAdapter = new SociosTableAdapter();
+
+            return (int) sociosTableAdapter.DniPerteneceASocio(idSocio, dniAComprobar) == 1;
+        }
+
+        public bool ExisteDniRegistrado(string dniAComprobar) 
+        {
+            SociosTableAdapter sociosTableAdapter = new SociosTableAdapter();
+
+            return sociosTableAdapter.ExisteDniRegistrado(dniAComprobar).Count == 1;
         }
     }
 }
