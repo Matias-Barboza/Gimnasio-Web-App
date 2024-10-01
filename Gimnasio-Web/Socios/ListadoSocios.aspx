@@ -43,8 +43,14 @@
                                     <input type="checkbox" class="form-check-input" checked='<%#Eval("EstaActivo") %>' disabled="disabled" runat="server"/>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:ButtonField ButtonType="Button" Text="&#xF341;" HeaderText="Pasar a activo/inactivo" AccessibleHeaderText="Cambiar estado de actividad"
-                                ItemStyle-HorizontalAlign="center" CommandName="CambiarEstadoSocio" ControlStyle-CssClass="btn btn-primary text-white fs-5 font-family-bootstrap-icons py-0 px-1" />
+                            <asp:TemplateField HeaderText="Pasar a activo/inactivo" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <button type="button" class="btn btn-primary fs-5 py-0 px-1" data-bs-toggle="modal" data-bs-target="#cambiarEstadoSocioModal"
+                                        onclick="VincularDatosSocioAModal('<%#Eval("Apellido") %>', '<%#Eval("Nombre") %>', <%#Eval("Id") %>, '<%#Eval("EstaActivo") %>')">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:ButtonField ButtonType="Button" Text="&#xF4CA;" HeaderText="Editar socio" AccessibleHeaderText="Editar socio" ItemStyle-HorizontalAlign="center"
                                 CommandName="EditarSocio" ControlStyle-CssClass="btn btn-warning text-white fs-5 font-family-bootstrap-icons py-0 px-1" />
                         </Columns>
