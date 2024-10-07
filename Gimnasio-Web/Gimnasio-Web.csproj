@@ -67,7 +67,9 @@
   <ItemGroup>
     <Content Include="Css\styles.css" />
     <Content Include="Cuotas\FormularioCuota.aspx" />
+    <Content Include="Cuotas\FormularioTipoCuota.aspx" />
     <Content Include="Cuotas\ListadoCuotas.aspx" />
+    <Content Include="Cuotas\ListadoTiposCuota.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Js\script.js" />
@@ -84,12 +86,26 @@
     <Compile Include="Cuotas\FormularioCuota.aspx.designer.cs">
       <DependentUpon>FormularioCuota.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Cuotas\FormularioTipoCuota.aspx.cs">
+      <DependentUpon>FormularioTipoCuota.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cuotas\FormularioTipoCuota.aspx.designer.cs">
+      <DependentUpon>FormularioTipoCuota.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Cuotas\ListadoCuotas.aspx.cs">
       <DependentUpon>ListadoCuotas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Cuotas\ListadoCuotas.aspx.designer.cs">
       <DependentUpon>ListadoCuotas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cuotas\ListadoTiposCuota.aspx.cs">
+      <DependentUpon>ListadoTiposCuota.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cuotas\ListadoTiposCuota.aspx.designer.cs">
+      <DependentUpon>ListadoTiposCuota.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
