@@ -51,13 +51,31 @@ namespace Gimnasio_Web
         protected global::System.Web.UI.WebControls.HiddenField CodigoSocioHiddenField;
 
         /// <summary>
-        /// Control CambiarEstadoButton.
+        /// Control CodigoTipoCuotaHiddenField.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CambiarEstadoButton;
+        protected global::System.Web.UI.WebControls.HiddenField CodigoTipoCuotaHiddenField;
+
+        /// <summary>
+        /// Control CambiarEstadoSocioButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CambiarEstadoSocioButton;
+
+        /// <summary>
+        /// Control CambiarEstadoTipoButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CambiarEstadoTipoButton;
 
         /// <summary>
         /// Control ContentPlaceHolder1.

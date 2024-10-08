@@ -37,7 +37,7 @@ namespace Gimnasio_Web.Cuotas
             try
             {
                 TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
-                List<TipoCuota> listaTiposCuota = tipoCuotaNegocio.ObtenerTiposCuotaPor(soloVisibles, campoBusqueda);
+                List<TipoCuota> listaTiposCuota = tipoCuotaNegocio.ObtenerTiposCuotaPor(campoBusqueda, soloVisibles);
 
                 if (MostrarResultadoBusqueda) 
                 {
@@ -51,6 +51,21 @@ namespace Gimnasio_Web.Cuotas
 
                 TiposCuotasGridView.DataSource = listaTiposCuota;
                 TiposCuotasGridView.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void CambiarEstadoTipoDeCuota(int codigoTipoCuota) 
+        {
+            try
+            {
+                TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
+                TipoCuota tipoCuotaACambiar = tipoCuotaNegocio.ObtenerTipoCuotaPorId(codigoTipoCuota);
+
+                tipoCuotaNegocio.ActualizarEstadoTipoCuota(tipoCuotaACambiar);
             }
             catch (Exception ex)
             {

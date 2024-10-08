@@ -42,6 +42,14 @@
                                     <input type="checkbox" class="form-check-input" checked='<%#Eval("Visible") %>' disabled="disabled" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Pasar a activo/inactivo" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="center">
+                                <ItemTemplate>
+                                    <button type="button" class="btn btn-primary fs-5 py-0 px-1" data-bs-toggle="modal" data-bs-target="#cambiarEstadoTipoCuotaModal"
+                                        onclick="VincularDatosTipoCuotaAModal('<%#Eval("Descripcion") %>', '<%#Eval("Id") %>', '<%#Eval("Visible") %>')">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:ButtonField ButtonType="Button" Text="&#xF341;" HeaderText="Ver historial de actualizaciones" AccessibleHeaderText="Ver historial de actualizaciones" ItemStyle-HorizontalAlign="center"
                                 CommandName="VerHistorial" ControlStyle-CssClass="btn btn-primary fs-5 font-family-bootstrap-icons py-0 px-1" />
                             <asp:ButtonField ButtonType="Button" Text="&#xF4CA;" HeaderText="Editar tipo de cuota" AccessibleHeaderText="Editar tipo de cuota" ItemStyle-HorizontalAlign="center"

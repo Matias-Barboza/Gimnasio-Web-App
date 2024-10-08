@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Gimnasio_Dominio;
+using Gimnasio_Web.Cuotas;
 using Gimnasio_Web.Socios;
 
 namespace Gimnasio_Web
@@ -34,7 +35,7 @@ namespace Gimnasio_Web
         }
 
         //-------------------------------------------------- EVENTOD ------------------------------------------------------------------------------------------
-        protected void CambiarEstadoButton_Click(object sender, EventArgs e)
+        protected void CambiarEstadoSocioButton_Click(object sender, EventArgs e)
         {
             if (Page is ListadoSocios listadoSociosPagina)
             {
@@ -42,6 +43,19 @@ namespace Gimnasio_Web
 
                 listadoSociosPagina.CambiarEstadoSocio(codigoSocio);
                 listadoSociosPagina.CargarSocios(listadoSociosPagina.SoloActivos);
+
+                CodigoSocioHiddenField.Value = string.Empty;
+            }
+        }
+
+        protected void CambiarEstadoTipoButton_Click(object sender, EventArgs e)
+        {
+            if (Page is ListadosTiposCuota listadoTiposCuotaPagina)
+            {
+                int codigoTipoCuota = Convert.ToInt32(CodigoTipoCuotaHiddenField.Value);
+
+                listadoTiposCuotaPagina.CambiarEstadoTipoDeCuota(codigoTipoCuota);
+                listadoTiposCuotaPagina.CargarTiposDeCuota(listadoTiposCuotaPagina.SoloVisibles);
 
                 CodigoSocioHiddenField.Value = string.Empty;
             }

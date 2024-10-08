@@ -110,6 +110,7 @@
             </nav>
 
             <asp:HiddenField ID="CodigoSocioHiddenField" runat="server" />
+            <asp:HiddenField ID="CodigoTipoCuotaHiddenField" runat="server" />
 
             <div class="modal fade" id="cambiarEstadoSocioModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -127,7 +128,29 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cancelar
                     </button>
-                    <asp:Button ID="CambiarEstadoButton" Text="Cambiar estado" OnClick="CambiarEstadoButton_Click" CssClass="btn btn-primary" runat="server" />
+                    <asp:Button ID="CambiarEstadoSocioButton" Text="Cambiar estado" OnClick="CambiarEstadoSocioButton_Click" CssClass="btn btn-primary" runat="server" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="modal fade" id="cambiarEstadoTipoCuotaModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalTipoCuotaLabel">Cambiar estado de actividad del tipo de cuota</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <%-- Texto asociado a través de evento --%>
+                      <p id="infoTipoCuotaACambiarEstado" class="mb-0"></p>
+                      <label id="codigoTipoCuotaModalLabel"></label>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <asp:Button ID="CambiarEstadoTipoButton" Text="Cambiar estado" OnClick="CambiarEstadoTipoButton_Click" CssClass="btn btn-primary" runat="server" />
                   </div>
                 </div>
               </div>

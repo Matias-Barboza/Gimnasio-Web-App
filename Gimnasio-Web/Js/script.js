@@ -12,3 +12,18 @@
         "' a " + nuevoEstado + "?"; 
     codigoSocioModalLabel.innerText = "Código de socio: '" + codigoSocio + "'.";
 }
+
+function VincularDatosTipoCuotaAModal(descripcion, codigoTipoCuota, estado)
+{
+    let pInfoTipoCuota = document.getElementById("infoTipoCuotaACambiarEstado");
+    let codigoTipoCuotaModalLabel = document.getElementById("codigoTipoCuotaModalLabel");
+    let codigoTipoCuotaHidden = document.getElementById("CodigoTipoCuotaHiddenField");
+    let estadoActual = (estado.toLowerCase() === "true");
+    let nuevoEstado = estadoActual == true ? "inactiva" : "activa";
+
+    codigoTipoCuotaHidden.value = codigoTipoCuota.toString();
+
+    pInfoTipoCuota.innerText = "¿Pasar el tipo de cuota: '" + descripcion +
+    "' a " + nuevoEstado + "?";
+    codigoTipoCuotaModalLabel.innerText = "Código de tipo de cuota: '" + codigoTipoCuota + "'.";
+}
