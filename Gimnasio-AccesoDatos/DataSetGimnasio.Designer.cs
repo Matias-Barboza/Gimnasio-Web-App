@@ -306,7 +306,7 @@ namespace Gimnasio_AccesoDatos {
         private void InitClass() {
             this.DataSetName = "DataSetGimnasio";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/DataSetGimnasio.xsd";
+            this.Namespace = "http://tempuri.org/DataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableUsuarios = new UsuariosDataTable();
@@ -2544,7 +2544,7 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SociosRow sociosRow {
+            public SociosRow SociosRow {
                 get {
                     return ((SociosRow)(this.GetParentRow(this.Table.ParentRelations["FK_cuota_socio"])));
                 }
@@ -2642,7 +2642,7 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public CuotasRow[] GetcuotasRows() {
+            public CuotasRow[] GetCuotasRows() {
                 if ((this.Table.ChildRelations["FK_cuota_tipo_cuota"] == null)) {
                     return new CuotasRow[0];
                 }
@@ -3218,7 +3218,7 @@ SELECT id, nombre_usuario, password, es_admin, es_profesor, nombre, apellido FRO
             this._commandCollection[2].Connection = this.Connection;
             this._commandCollection[2].CommandText = "SELECT apellido, es_admin, es_profesor, id, nombre, nombre_usuario, password FROM" +
                 " usuarios WHERE (nombre_usuario COLLATE Latin1_General_CS_AI = @nombreUsuario) A" +
-                "ND ([password] COLLATE Latin1_General_CS_AI = @password)";
+                "ND (password COLLATE Latin1_General_CS_AI = @password)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@nombreUsuario", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "nombre_usuario", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@password", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "password", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3734,31 +3734,22 @@ SELECT id, dni, nombre, apellido, esta_activo FROM socios WHERE (id = @id)";
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@dni", global::System.Data.SqlDbType.VarChar, 8, global::System.Data.ParameterDirection.Input, 0, 0, "dni", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[5].Connection = this.Connection;
-            this._commandCollection[5].CommandText = "SELECT        id, dni, nombre, apellido, esta_activo\r\nFROM            socios\r\nWHE" +
-                "RE dni LIKE @dni";
+            this._commandCollection[5].CommandText = "SELECT apellido, dni, esta_activo, id, nombre FROM socios WHERE (dni LIKE @dni)";
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@dni", global::System.Data.SqlDbType.VarChar, 8, global::System.Data.ParameterDirection.Input, 0, 0, "dni", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[6].Connection = this.Connection;
-            this._commandCollection[6].CommandText = "SELECT        id, dni, nombre, apellido, esta_activo\r\nFROM            socios\r\nWHE" +
-                "RE id=@id";
+            this._commandCollection[6].CommandText = "SELECT apellido, dni, esta_activo, id, nombre FROM socios WHERE (id = @id)";
             this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[7].Connection = this.Connection;
-            this._commandCollection[7].CommandText = "SELECT        id, dni, nombre, apellido, esta_activo\r\nFROM            socios\r\nWHE" +
-                "RE esta_activo = 1";
+            this._commandCollection[7].CommandText = "SELECT apellido, dni, esta_activo, id, nombre FROM socios WHERE (esta_activo = 1)" +
+                "";
             this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[8] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[8].Connection = this.Connection;
-            this._commandCollection[8].CommandText = @"SELECT        id, dni, nombre, apellido, esta_activo
-FROM            socios
-WHERE CAST(id as VARCHAR) LIKE @campoBusqueda OR
-              dni LIKE @campoBusqueda OR
-              nombre LIKE @campoBusqueda OR
-              apellido LIKE @campoBusqueda OR
-              CONCAT(nombre, ' ', apellido) LIKE @campoBusqueda
-";
+            this._commandCollection[8].CommandText = @"SELECT apellido, dni, esta_activo, id, nombre FROM socios WHERE (CAST(id AS VARCHAR) LIKE @campoBusqueda) OR (dni LIKE @campoBusqueda) OR (nombre LIKE @campoBusqueda) OR (apellido LIKE @campoBusqueda) OR ({ fn CONCAT(nombre, ' ', apellido) } LIKE @campoBusqueda)";
             this._commandCollection[8].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusqueda", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -4403,12 +4394,7 @@ VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@montoAbonado", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "monto_abonado", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"SELECT uc.id, uc.id_socio, uc.id_tipo_cuota, uc.fecha_pago, uc.fecha_vencimiento, uc.monto_abonado, uc.mes_que_abona, uc.visible
-FROM cuotas as uc
-WHERE uc.id_socio = @idSocio AND 
-	  uc.fecha_vencimiento = (SELECT MAX(fecha_vencimiento)
-				FROM cuotas
-				WHERE id_socio = @idSocio)";
+            this._commandCollection[3].CommandText = @"SELECT fecha_pago, fecha_vencimiento, id, id_socio, id_tipo_cuota, mes_que_abona, monto_abonado, visible FROM cuotas AS uc WHERE (id_socio = @idSocio) AND (fecha_vencimiento = (SELECT MAX(fecha_vencimiento) AS Expr1 FROM cuotas WHERE (id_socio = @idSocio)))";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idSocio", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_socio", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -4879,20 +4865,28 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        id, descripcion, valor, visible\r\nFROM            tipos_cuotas";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT descripcion, id, valor, visible FROM tipos_cuotas WHERE (visible = 1)";
+            this._commandCollection[1].CommandText = "SELECT descripcion, id, valor, visible FROM tipos_cuotas WHERE (CAST(id AS VARCHA" +
+                "R) = @campoBusqueda) OR (descripcion LIKE @campoBusqueda) OR (valor = @campoBusq" +
+                "uedaMonto)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusqueda", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusquedaMonto", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT valor FROM tipos_cuotas WHERE id= @id";
+            this._commandCollection[2].CommandText = "SELECT descripcion, id, valor, visible FROM tipos_cuotas WHERE (visible = 1)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "SELECT valor FROM tipos_cuotas WHERE id= @id";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4923,8 +4917,26 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTiposCuotasVisibles() {
+        public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTiposCuotasPor(string campoBusqueda, decimal campoBusquedaMonto) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((campoBusqueda == null)) {
+                throw new global::System.ArgumentNullException("campoBusqueda");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(campoBusqueda));
+            }
+            this.Adapter.SelectCommand.Parameters[1].Value = ((decimal)(campoBusquedaMonto));
+            DataSetGimnasio.TiposCuotasDataTable dataTable = new DataSetGimnasio.TiposCuotasDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTiposCuotasVisibles() {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             DataSetGimnasio.TiposCuotasDataTable dataTable = new DataSetGimnasio.TiposCuotasDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -5073,7 +5085,7 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual global::System.Nullable<decimal> ObtenerValorActualPorId(int id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
             command.Parameters[0].Value = ((int)(id));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
