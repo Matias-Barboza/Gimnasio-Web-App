@@ -15,6 +15,15 @@ namespace Gimnasio_Web.Cuotas
     {
 
         /// <summary>
+        /// Control TituloPagina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TituloPagina;
+
+        /// <summary>
         /// Control CodigoTipoCuotaTextBox.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace Gimnasio_Web.Cuotas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox MontoActualTextBox;
+
+        /// <summary>
+        /// Control HistorialTipoCuotaGridView.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView HistorialTipoCuotaGridView;
 
         /// <summary>
         /// Control EditarTipoCuotaButton.
