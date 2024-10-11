@@ -5,7 +5,7 @@
 
     <div class="border rounded h-fill-available m-5 mt-4 p-3">
         <div>
-            <h2 class="text-center" runat="server">Formulario de edición de tipo de cuota</h2>
+            <h2 id="TituloPagina" class="text-center" runat="server">Formulario de edición de tipo de cuota</h2>
             <hr class="mt-0" />
         </div>
         <asp:UpdatePanel runat="server">
@@ -17,6 +17,8 @@
                         <div class="mb-3">
                             <asp:TextBox ID="CodigoTipoCuotaTextBox" ReadOnly="true" PlaceHolder="Ej: 1" CssClass="form-control form-control-lg" runat="server"></asp:TextBox>
                         </div>
+                        <%if (EsEdicion)
+                            {%>
                         <h4>Datos del tipo de cuota</h4>
                         <hr class="mt-0" />
                         <div class="d-flex">
@@ -32,12 +34,26 @@
                                 </div>
                             </div>
                         </div>
+                        <%}%>
                     </div>
 
                     <%if (!EsEdicion)
                         {%>
                     <div class="border rounded my-4 mx-2 p-3">
                         <%-- Historial tipo de cuota --%>
+                        <asp:GridView ID="HistorialTipoCuotaGridView" AutoGenerateColumns="false"
+                            CssClass="table table-bordered table-striped table-hover table-group-divider" HeaderStyle-CssClass="table-dark" runat="server">
+                            <Columns>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <%#Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField />
+                                <asp:BoundField />
+                                <asp:BoundField />
+                            </Columns>
+                        </asp:GridView>
                     </div>
                     <%}%>
 
