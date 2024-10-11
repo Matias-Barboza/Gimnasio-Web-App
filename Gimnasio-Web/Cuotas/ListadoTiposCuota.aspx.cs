@@ -20,7 +20,7 @@ namespace Gimnasio_Web.Cuotas
             {
                 if (Request["estado"] == "activas") 
                 {
-                    TituloListado.InnerText += "activas";
+                    TituloListado.InnerText += " activas";
                     SoloVisibles = true;
                 }
             }
