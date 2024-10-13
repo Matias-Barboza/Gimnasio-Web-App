@@ -41,19 +41,27 @@
                         {%>
                     <div class="border rounded my-4 mx-2 p-3">
                         <%-- Historial tipo de cuota --%>
-                        <asp:GridView ID="HistorialTipoCuotaGridView" AutoGenerateColumns="false"
-                            CssClass="table table-bordered table-striped table-hover table-group-divider" HeaderStyle-CssClass="table-dark" runat="server">
-                            <Columns>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <%#Container.DataItemIndex + 1 %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField />
-                                <asp:BoundField />
-                                <asp:BoundField />
-                            </Columns>
-                        </asp:GridView>
+                        <div class="table-responsive rounded">
+                            <asp:GridView ID="HistorialTipoCuotaGridView" AutoGenerateColumns="false"
+                                CssClass="table table-bordered table-striped table-hover table-group-divider" HeaderStyle-CssClass="table-dark" runat="server">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="#">
+                                        <ItemTemplate>
+                                            <%#Container.DataItemIndex + 1 %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="Id" Visible="false"/>
+                                    <asp:BoundField DataField="TipoCuota.Descripcion" HeaderText="Tipo de cuota" ItemStyle-VerticalAlign="Middle"/>
+                                    <asp:BoundField DataField="TipoCuota.Valor" HeaderText="Valor viejo" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:C2}"/>
+                                    <asp:BoundField DataField="NuevoValor" HeaderText="Valor nuevo" ItemStyle-VerticalAlign="Middle" DataFormatString="{0:C2}"/>
+                                    <asp:TemplateField HeaderText="Descripción">
+                                        <ItemTemplate>
+                                            <%#$"El cambio fué realizado por  el usuario '{Eval("Usuario.NombreUsuario")}' el {Eval("FechaCambio")}." %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
                     </div>
                     <%}%>
 

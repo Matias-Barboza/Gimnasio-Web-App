@@ -14,25 +14,29 @@ namespace Gimnasio_Web.Cuotas
         public bool EsEdicion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            bool convertido = int.TryParse(Request.QueryString["id"], out int idTipoCuota);
+
             if (Request.QueryString.Count == 1) 
             {
-                if (int.TryParse(Request.QueryString["id"], out int idTipoCuota)) 
+                if (convertido) 
                 {
                     EsEdicion = true;
-                    CargarDatosTipoCuota(idTipoCuota);
                 }
-                return;
             }
 
             if (Request.QueryString.Count == 2) 
             {
-                int.TryParse(Request.QueryString["id"], out int idTipoCuota);
                 bool.TryParse(Request.QueryString["historial"], out bool mostrarHistorial);
 
                 if (idTipoCuota > 0 && mostrarHistorial) 
                 {
                     CargarHistorialTipoCuota(idTipoCuota);
                 }
+            }
+
+            if (!IsPostBack) 
+            {
+                CargarDatosTipoCuota(idTipoCuota);
             }
         }
 
@@ -63,7 +67,17 @@ namespace Gimnasio_Web.Cuotas
         {
             try
             {
+                AuditoriaTipoCuotaNegocio auditoriaTipoCuotaNegocio = new AuditoriaTipoCuotaNegocio();
+                List<AuditoriaTipoCuota> listaAuditoriasTipoCuota = auditoriaTipoCuotaNegocio.ObtenerAuditoriasConDescripcionYUsuarioPorIdTipoCuota(idTipoCuota);
+                listaAuditoriasTipoCuota = listaAuditoriasTipoCuota.OrderByDescending(a => a.FechaCambio).ToList();
 
+                if (listaAuditoriasTipoCuota.Count == 0) 
+                {
+                    return;
+                }
+
+                HistorialTipoCuotaGridView.DataSource = listaAuditoriasTipoCuota;
+                HistorialTipoCuotaGridView.DataBind();
             }
             catch (Exception ex)
             {
