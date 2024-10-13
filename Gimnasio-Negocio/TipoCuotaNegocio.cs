@@ -12,6 +12,71 @@ namespace Gimnasio_Negocio
 {
     public class TipoCuotaNegocio
     {
+        public bool ActualizarEstadoTipoCuota(TipoCuota tipoCuota)
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+            
+            return tiposCuotasTableAdapter.ActualizarEstadoTipoCuota(!tipoCuota.Visible, tipoCuota.Id) == 1;
+        }
+
+        public TipoCuota ObtenerTipoCuotaPorId(int idTipoCuota) 
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+            DataTable tiposCuotaDataTable = tiposCuotasTableAdapter.ObtenerTipoCuotaPorId(idTipoCuota);
+            TipoCuota tipoCuotaBuscada = new TipoCuota();
+
+            if (tiposCuotaDataTable.Rows.Count != 0) 
+            {
+                DataSetGimnasio.TiposCuotasRow tipoCuotaFila = (DataSetGimnasio.TiposCuotasRow) tiposCuotaDataTable.Rows[0];
+
+                tipoCuotaBuscada.Id = tipoCuotaFila.id;
+                tipoCuotaBuscada.Descripcion = tipoCuotaFila.descripcion;
+                tipoCuotaBuscada.Valor = tipoCuotaFila.valor;
+                tipoCuotaBuscada.Visible = tipoCuotaFila.visible;
+            }
+
+            return tipoCuotaBuscada;
+        }
+
+        public List<TipoCuota> ObtenerTiposCuotaPor(string campoBusqueda = null, bool soloVisibles = false)
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+            DataTable tiposCuotasDataTable = new DataTable();
+            List<TipoCuota> listaTiposCuotas = new List<TipoCuota>();
+
+            if (campoBusqueda != null) 
+            {
+                decimal.TryParse(campoBusqueda, out decimal campoBusquedaMonto);
+                campoBusqueda = $"%{campoBusqueda}%";
+
+                tiposCuotasDataTable = tiposCuotasTableAdapter.ObtenerTiposCuotasPor(campoBusqueda, campoBusquedaMonto);
+            }
+            else 
+            {
+                tiposCuotasDataTable = tiposCuotasTableAdapter.ObtenerTiposCuotas();
+            }
+
+            foreach (DataSetGimnasio.TiposCuotasRow tipoCuotaFila in tiposCuotasDataTable.Rows)
+            {
+                TipoCuota tipoCuota = new TipoCuota()
+                {
+                    Id = tipoCuotaFila.id,
+                    Descripcion = tipoCuotaFila.descripcion,
+                    Valor = tipoCuotaFila.valor,
+                    Visible = tipoCuotaFila.visible
+                };
+
+                listaTiposCuotas.Add(tipoCuota);
+            }
+
+            if (soloVisibles) 
+            {
+                listaTiposCuotas = listaTiposCuotas.Where(t => t.Visible).ToList();
+            }
+
+            return listaTiposCuotas;
+        }
+
         public List<TipoCuota> ObtenerTiposCuotaVisibles()
         {
             TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
