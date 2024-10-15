@@ -12,13 +12,14 @@
             <ContentTemplate>
                 <div class="overflow-y-scroll vh-65">
                     <div class="border rounded mx-2 mb-4 p-3">
+                        <%if (EsEdicion)
+                          {%>
                         <h4>Código de tipo de cuota</h4>
                         <hr class="mt-0" />
                         <div class="mb-3">
                             <asp:TextBox ID="CodigoTipoCuotaTextBox" ReadOnly="true" PlaceHolder="Ej: 1" CssClass="form-control form-control-lg" runat="server"></asp:TextBox>
                         </div>
-                        <%if (EsEdicion)
-                            {%>
+                        <%}%>
                         <h4>Datos del tipo de cuota</h4>
                         <hr class="mt-0" />
                         <div class="d-flex">
@@ -34,12 +35,15 @@
                                 </div>
                             </div>
                         </div>
-                        <%}%>
                     </div>
 
                     <%if (!EsEdicion)
                         {%>
                     <div class="border rounded my-4 mx-2 p-3">
+                        <div>
+                            <h2 class="text-center">Listado de movimientos sobre valor de cuota</h2>
+                            <hr class="mt-0" />
+                        </div>
                         <%-- Historial tipo de cuota --%>
                         <div class="table-responsive rounded">
                             <asp:GridView ID="HistorialTipoCuotaGridView" AutoGenerateColumns="false"
