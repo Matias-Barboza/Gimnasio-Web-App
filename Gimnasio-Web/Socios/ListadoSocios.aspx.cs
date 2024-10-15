@@ -11,16 +11,16 @@ namespace Gimnasio_Web.Socios
 {
     public partial class ListadoSocios : System.Web.UI.Page
     {
+        private const string TITULO_LISTADO_ACTIVOS = "Listado de socios activos";
         public bool SoloActivos;
         public bool MostrarResultadoBusqueda;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            TituloListado.InnerText = "Listado de socios";
 
             if (Request.QueryString["estado"] != null && Request.QueryString["estado"] == "activos") 
             {
-                TituloListado.InnerText += " activos";
+                TituloListado.InnerText = TITULO_LISTADO_ACTIVOS;
                 SoloActivos = true;
             }
 

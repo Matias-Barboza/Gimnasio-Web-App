@@ -11,6 +11,7 @@ namespace Gimnasio_Web.Cuotas
 {
     public partial class FormularioTipoCuota : System.Web.UI.Page
     {
+        private const string TITULO_PAGINA_HISTORIAL = "Historial de cuota";
         public bool EsEdicion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,6 +31,7 @@ namespace Gimnasio_Web.Cuotas
 
                 if (idTipoCuota > 0 && mostrarHistorial) 
                 {
+                    TituloPagina.InnerText = TITULO_PAGINA_HISTORIAL;
                     CargarHistorialTipoCuota(idTipoCuota);
                 }
             }

@@ -11,6 +11,7 @@ namespace Gimnasio_Web.Cuotas
 {
     public partial class ListadosTiposCuota : System.Web.UI.Page
     {
+        private const string TITULO_PAGINA_LISTADO_ACTIVAS = "Listado de tipos de cuota activas";
         public bool MostrarResultadoBusqueda;
         public bool SoloVisibles;
 
@@ -20,7 +21,7 @@ namespace Gimnasio_Web.Cuotas
             {
                 if (Request["estado"] == "activas") 
                 {
-                    TituloListado.InnerText += " activas";
+                    TituloListado.InnerText = TITULO_PAGINA_LISTADO_ACTIVAS;
                     SoloVisibles = true;
                 }
             }

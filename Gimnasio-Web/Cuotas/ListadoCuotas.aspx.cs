@@ -11,26 +11,27 @@ namespace Gimnasio_Web.Cuotas
 {
     public partial class ListadoCuotas : System.Web.UI.Page
     {
+        private const string TITULO_PAGINA_LISTADO_VENCIDAS = "Listado de cuotas vencidas";
+        private const string TITULO_PAGINA_LISTADO_PROXIMAS_VENCERSE = "Listado de cuotas próximas a vencerse";
         public bool SoloVencidas;
         public bool SoloProximasAVencerse;
         public bool MostrarResultadoBusqueda;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            TituloListado.InnerText = "Listado de cuotas";
 
             if (Request.QueryString["estado"] != null)
             {
 
                 if (Request.QueryString["estado"] == "vencidas") 
                 {
-                    TituloListado.InnerText += " vencidas";
+                    TituloListado.InnerText = TITULO_PAGINA_LISTADO_VENCIDAS;
                     SoloVencidas = true;
                 }
 
                 if (Request.QueryString["estado"] == "proximas") 
                 {
-                    TituloListado.InnerText += " próximas a vencerse";
+                    TituloListado.InnerText = TITULO_PAGINA_LISTADO_PROXIMAS_VENCERSE;
                     SoloProximasAVencerse = true;
                 }
             }
