@@ -153,22 +153,13 @@ namespace Gimnasio_Negocio
         }
 
         //-------------------------------------------------- OTROS --------------------------------------------------------------------------------------------
-        public static DateTime FechaVencimientoCalculada(DateTime fechaPago, int idTipoCuota, int cantidad) 
+        public static DateTime FechaVencimientoCalculada(DateTime fechaPago, int idTipoCuota, int cantidad)
         {
-            if (idTipoCuota == 1) 
-            {
-                return fechaPago.AddDays(cantidad);
-            }
-            else if (idTipoCuota == 2) 
-            {
-                return fechaPago.AddDays(cantidad * 7);
-            }
-            else if (idTipoCuota == 3) 
-            {
-                return fechaPago.AddMonths(cantidad);
-            }
+            TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
+            int cantidadDias = tipoCuotaNegocio.ObtenerCantidadDiasTipoCuotaPorId(idTipoCuota);
+            DateTime fechaVencimiento = fechaPago.AddDays(cantidadDias * cantidad);
 
-            return fechaPago;
+            return fechaVencimiento;
         }
     }
 }
