@@ -98,7 +98,7 @@ namespace Gimnasio_Web.Cuotas
             }
             else if (e.CommandName == "VerHistorial") 
             {
-                Response.Redirect($"/Cuotas/FormularioTipoCuota.aspx?id={idTipoCuota}&historial=true");
+                Response.Redirect($"/Cuotas/HistorialTipoCuota.aspx?id={idTipoCuota}");
             }
         }
     }

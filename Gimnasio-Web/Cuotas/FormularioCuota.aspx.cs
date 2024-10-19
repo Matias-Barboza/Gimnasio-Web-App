@@ -283,7 +283,6 @@ namespace Gimnasio_Web.Cuotas
             }
         }
 
-
         protected void MayorACeroValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             try
