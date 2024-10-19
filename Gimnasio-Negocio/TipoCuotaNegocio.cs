@@ -40,6 +40,18 @@ namespace Gimnasio_Negocio
             return tiposCuotasTableAdapter.ExisteTipoCuotaConId(idTipoCuota) != null;
         }
 
+        public decimal ObtenerMontoActualTipoCuotaPorId(int idTipoCuota)
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+
+            if (!ExisteTipoCuotaConId(idTipoCuota)) 
+            {
+                return 0;
+            }
+
+            return (decimal) tiposCuotasTableAdapter.ObtenerMontoActualTipoCuotaPorId(idTipoCuota);
+        }
+
         public TipoCuota ObtenerTipoCuotaPorId(int idTipoCuota) 
         {
             TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
@@ -161,6 +173,19 @@ namespace Gimnasio_Negocio
             if (valorActual != 0) 
             {
                 montoAbonar = valorActual * cantidad;
+            }
+
+            return montoAbonar.ToString("C2").Substring(2);
+        }
+
+        public string CalcularMontoAbonar(decimal monto, int cantidad) 
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+            decimal montoAbonar = 0;
+
+            if (monto != 0) 
+            {
+                montoAbonar = monto * cantidad;
             }
 
             return montoAbonar.ToString("C2").Substring(2);
