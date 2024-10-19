@@ -11,7 +11,7 @@
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
                 <div class="vh-65">
-                    <div class="border rounded mx-2 mb-4 p-3">
+                    <div class="border rounded mx-2 mb-4 p-3 pb-5">
                         <h4>Código de tipo de cuota</h4>
                         <hr class="mt-0" />
                         <div class="mb-3">
@@ -59,7 +59,7 @@
                         </div>
                         <%if (EsEdicion) 
                             {%>
-                        <p class="form-text form-text my-0 ms-2">Únicamente se puede editar el valor del tipo de cuota.</p>
+                        <p class="form-text form-text my-0 ms-1">Únicamente se puede editar el valor del tipo de cuota.</p>
                         <%}%>
                     </div>
 
