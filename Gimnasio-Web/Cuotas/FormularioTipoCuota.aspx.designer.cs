@@ -42,22 +42,67 @@ namespace Gimnasio_Web.Cuotas
         protected global::System.Web.UI.WebControls.TextBox DescripcionTextBox;
 
         /// <summary>
-        /// Control MontoActualTextBox.
+        /// Control CantidadDiasTextBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MontoActualTextBox;
+        protected global::System.Web.UI.WebControls.TextBox CantidadDiasTextBox;
 
         /// <summary>
-        /// Control HistorialTipoCuotaGridView.
+        /// Control CantidadRequiredValidator.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView HistorialTipoCuotaGridView;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CantidadRequiredValidator;
+
+        /// <summary>
+        /// Control CantidadSoloNumerosValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator CantidadSoloNumerosValidator;
+
+        /// <summary>
+        /// Control MayorACeroValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator MayorACeroValidator;
+
+        /// <summary>
+        /// Control MontoTextBox.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox MontoTextBox;
+
+        /// <summary>
+        /// Control MontoRequiredFieldValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator MontoRequiredFieldValidator;
+
+        /// <summary>
+        /// Control MontoCustomValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator MontoCustomValidator;
 
         /// <summary>
         /// Control EditarTipoCuotaButton.
@@ -67,5 +112,14 @@ namespace Gimnasio_Web.Cuotas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button EditarTipoCuotaButton;
+
+        /// <summary>
+        /// Control AñadirTipoCuotaButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AñadirTipoCuotaButton;
     }
 }
