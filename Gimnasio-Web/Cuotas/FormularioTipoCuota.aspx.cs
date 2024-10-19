@@ -11,30 +11,38 @@ namespace Gimnasio_Web.Cuotas
 {
     public partial class FormularioTipoCuota : System.Web.UI.Page
     {
-        private const string TITULO_PAGINA_HISTORIAL = "Historial de cuota";
+        private const string TITULO_PAGINA_EDICION = "Formulario de edición de tipo de cuota";
+        private const string PLACEHOLDER_CODIGO_TIPO_CUOTA_EDICION = "Ej: 1";
         public bool EsEdicion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             bool convertido = int.TryParse(Request.QueryString["id"], out int idTipoCuota);
 
-            if (Request.QueryString.Count == 1) 
+            if (Request.QueryString.Count == 0) 
             {
-                if (convertido) 
-                {
-                    EsEdicion = true;
-                }
+                ConfigurarTextBoxsReadOnly(false);
+                return;
             }
 
-            if (Request.QueryString.Count == 2) 
+            if (Request.QueryString.Count > 1) 
             {
-                bool.TryParse(Request.QueryString["historial"], out bool mostrarHistorial);
-
-                if (idTipoCuota > 0 && mostrarHistorial) 
-                {
-                    TituloPagina.InnerText = TITULO_PAGINA_HISTORIAL;
-                    CargarHistorialTipoCuota(idTipoCuota);
-                }
+                return;
             }
+
+            if (!convertido) 
+            {
+                return;
+            }
+
+            if (!ExisteTipoCuotaConId(idTipoCuota)) 
+            {
+                return;
+            }
+            
+            EsEdicion = true;
+            TituloPagina.InnerText = TITULO_PAGINA_EDICION;
+            CodigoTipoCuotaTextBox.Attributes["Placeholder"] = PLACEHOLDER_CODIGO_TIPO_CUOTA_EDICION;
+            ConfigurarTextBoxsReadOnly(true);
 
             if (!IsPostBack) 
             {
@@ -57,7 +65,8 @@ namespace Gimnasio_Web.Cuotas
 
                 CodigoTipoCuotaTextBox.Text = tipoCuota.Id.ToString();
                 DescripcionTextBox.Text = tipoCuota.Descripcion;
-                MontoActualTextBox.Text = tipoCuota.Valor.ToString("C2").Substring(2);
+                CantidadDiasTextBox.Text = tipoCuota.CantidadEnDias.ToString();
+                MontoTextBox.Text = tipoCuota.Valor.ToString("C2").Substring(2);
             }
             catch (Exception ex)
             {
@@ -65,25 +74,94 @@ namespace Gimnasio_Web.Cuotas
             }
         }
 
-        public void CargarHistorialTipoCuota(int idTipoCuota) 
+        public void ConfigurarTextBoxsReadOnly(bool readOnly) 
+        {
+            DescripcionTextBox.ReadOnly = readOnly;
+            CantidadDiasTextBox.ReadOnly = readOnly;
+            MontoTextBox.ReadOnly = EsEdicion ? !EsEdicion : readOnly;
+        }
+
+        public void VincularDatosATipoCuota(TipoCuota tipoCuota) 
+        {
+            tipoCuota.Descripcion = DescripcionTextBox.Text;
+            tipoCuota.Valor = decimal.Parse(MontoTextBox.Text);
+            tipoCuota.CantidadEnDias = int.Parse(CantidadDiasTextBox.Text);
+        }
+
+        //-------------------------------------------------- FUNCIONES ----------------------------------------------------------------------------------------
+        public bool ExisteTipoCuotaConId(int idTipoCuota)
         {
             try
             {
-                AuditoriaTipoCuotaNegocio auditoriaTipoCuotaNegocio = new AuditoriaTipoCuotaNegocio();
-                List<AuditoriaTipoCuota> listaAuditoriasTipoCuota = auditoriaTipoCuotaNegocio.ObtenerAuditoriasConDescripcionYUsuarioPorIdTipoCuota(idTipoCuota);
-                listaAuditoriasTipoCuota = listaAuditoriasTipoCuota.OrderByDescending(a => a.FechaCambio).ToList();
+                TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
 
-                if (listaAuditoriasTipoCuota.Count == 0) 
+                return tipoCuotaNegocio.ExisteTipoCuotaConId(idTipoCuota);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
+        protected void EditarTipoCuotaButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void AñadirTipoCuotaButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
+                TipoCuota tipoCuota = new TipoCuota();
+
+                if (!Page.IsValid) 
                 {
                     return;
                 }
 
-                HistorialTipoCuotaGridView.DataSource = listaAuditoriasTipoCuota;
-                HistorialTipoCuotaGridView.DataBind();
+                VincularDatosATipoCuota(tipoCuota);
+
+                tipoCuotaNegocio.AñadirTipoCuota(tipoCuota);
+
+                Response.Redirect("/Cuotas/ListadoTiposCuota.aspx", false);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        //-------------------------------------------------- VALIDATORS ---------------------------------------------------------------------------------------
+        protected void MayorACeroValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                if (!CantidadRequiredValidator.IsValid || !CantidadSoloNumerosValidator.IsValid)
+                {
+                    args.IsValid = true;
+                    return;
+                }
+
+                args.IsValid = int.TryParse(CantidadDiasTextBox.Text, out int cantidad) && cantidad > 0;
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
+            }
+        }
+
+        protected void MontoCustomValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            try
+            {
+                args.IsValid = decimal.TryParse(MontoTextBox.Text, out decimal monto) && monto > 1;
+            }
+            catch (Exception)
+            {
+                args.IsValid = false;
             }
         }
     }
