@@ -106,7 +106,29 @@ namespace Gimnasio_Web.Cuotas
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
         protected void EditarTipoCuotaButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
+                TipoCuota tipoCuota = new TipoCuota();
 
+                if (!Page.IsValid)
+                {
+                    return;
+                }
+
+                tipoCuota.Id = int.Parse(Request.QueryString["id"]);
+
+                VincularDatosATipoCuota(tipoCuota);
+
+                tipoCuotaNegocio.ActualizarMontoTipoCuota(tipoCuota);
+
+                Response.Redirect("/Cuotas/ListadoTiposCuota.aspx", false);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         protected void AñadirTipoCuotaButton_Click(object sender, EventArgs e)

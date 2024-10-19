@@ -19,6 +19,13 @@ namespace Gimnasio_Negocio
             return tiposCuotasTableAdapter.AñadirTipoCuota(tipoCuota.Descripcion, tipoCuota.Valor, tipoCuota.CantidadEnDias) == 1;
         }
 
+        public bool ActualizarMontoTipoCuota(TipoCuota tipoCuota)
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+            
+            return tiposCuotasTableAdapter.ActualizarMontoTipoCuota(tipoCuota.Valor, tipoCuota.Id) == 1;
+        }
+        
         public bool ActualizarEstadoTipoCuota(TipoCuota tipoCuota)
         {
             TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
