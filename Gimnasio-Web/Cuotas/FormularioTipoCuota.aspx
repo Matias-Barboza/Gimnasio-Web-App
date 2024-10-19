@@ -67,7 +67,7 @@
                         <%if (EsEdicion)
                             {%>
                         <asp:Button ID="EditarTipoCuotaButton" Text="Editar" OnClick="EditarTipoCuotaButton_Click" CausesValidation="true"
-                            ValidationGroup="OperacionValidationGroup" CssClass="btn btn-warning btn-lg" runat="server" />
+                            ValidationGroup="OperacionValidationGroup" CssClass="btn btn-primary btn-lg" runat="server" />
                         <%}
                           else
                             {%>
