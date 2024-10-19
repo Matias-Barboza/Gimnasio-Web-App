@@ -12,11 +12,25 @@ namespace Gimnasio_Negocio
 {
     public class TipoCuotaNegocio
     {
+        public bool AñadirTipoCuota(TipoCuota tipoCuota) 
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+
+            return tiposCuotasTableAdapter.AñadirTipoCuota(tipoCuota.Descripcion, tipoCuota.Valor, tipoCuota.CantidadEnDias) == 1;
+        }
+
         public bool ActualizarEstadoTipoCuota(TipoCuota tipoCuota)
         {
             TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
             
             return tiposCuotasTableAdapter.ActualizarEstadoTipoCuota(!tipoCuota.Visible, tipoCuota.Id) == 1;
+        }
+
+        public bool ExisteTipoCuotaConId(int idTipoCuota) 
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+
+            return tiposCuotasTableAdapter.ExisteTipoCuotaConId(idTipoCuota) != null;
         }
 
         public TipoCuota ObtenerTipoCuotaPorId(int idTipoCuota) 
@@ -32,10 +46,18 @@ namespace Gimnasio_Negocio
                 tipoCuotaBuscada.Id = tipoCuotaFila.id;
                 tipoCuotaBuscada.Descripcion = tipoCuotaFila.descripcion;
                 tipoCuotaBuscada.Valor = tipoCuotaFila.valor;
+                tipoCuotaBuscada.CantidadEnDias = tipoCuotaFila.cantidad_en_dias;
                 tipoCuotaBuscada.Visible = tipoCuotaFila.visible;
             }
 
             return tipoCuotaBuscada;
+        }
+
+        public int ObtenerCantidadDiasTipoCuotaPorId(int idTipoCuota) 
+        {
+            TiposCuotasTableAdapter tiposCuotasTableAdapter = new TiposCuotasTableAdapter();
+
+            return (int) tiposCuotasTableAdapter.ObtenerCantidadDiasTipoCuotaPorId(idTipoCuota);
         }
 
         public List<TipoCuota> ObtenerTiposCuotaPor(string campoBusqueda = null, bool soloVisibles = false)
@@ -63,6 +85,7 @@ namespace Gimnasio_Negocio
                     Id = tipoCuotaFila.id,
                     Descripcion = tipoCuotaFila.descripcion,
                     Valor = tipoCuotaFila.valor,
+                    CantidadEnDias = tipoCuotaFila.cantidad_en_dias,
                     Visible = tipoCuotaFila.visible
                 };
 
@@ -89,6 +112,7 @@ namespace Gimnasio_Negocio
                         tiposCuotasRow.id,
                         tiposCuotasRow.descripcion,
                         tiposCuotasRow.valor,
+                        tiposCuotasRow.cantidad_en_dias,
                         tiposCuotasRow.visible
                     );
 
@@ -110,6 +134,7 @@ namespace Gimnasio_Negocio
                         tiposCuotasRow.id,
                         tiposCuotasRow.descripcion,
                         tiposCuotasRow.valor,
+                        tiposCuotasRow.cantidad_en_dias,
                         tiposCuotasRow.visible
                     );
 

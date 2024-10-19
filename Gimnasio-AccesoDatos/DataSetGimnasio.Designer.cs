@@ -1583,6 +1583,8 @@ namespace Gimnasio_AccesoDatos {
             
             private global::System.Data.DataColumn columnvisible;
             
+            private global::System.Data.DataColumn columncantidad_en_dias;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public TiposCuotasDataTable() {
@@ -1650,6 +1652,14 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn cantidad_en_diasColumn {
+                get {
+                    return this.columncantidad_en_dias;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1685,13 +1695,14 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public TiposCuotasRow AddTiposCuotasRow(string descripcion, decimal valor, bool visible) {
+            public TiposCuotasRow AddTiposCuotasRow(string descripcion, decimal valor, bool visible, int cantidad_en_dias) {
                 TiposCuotasRow rowTiposCuotasRow = ((TiposCuotasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         descripcion,
                         valor,
-                        visible};
+                        visible,
+                        cantidad_en_dias};
                 rowTiposCuotasRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowTiposCuotasRow);
                 return rowTiposCuotasRow;
@@ -1725,6 +1736,7 @@ namespace Gimnasio_AccesoDatos {
                 this.columndescripcion = base.Columns["descripcion"];
                 this.columnvalor = base.Columns["valor"];
                 this.columnvisible = base.Columns["visible"];
+                this.columncantidad_en_dias = base.Columns["cantidad_en_dias"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1738,6 +1750,8 @@ namespace Gimnasio_AccesoDatos {
                 base.Columns.Add(this.columnvalor);
                 this.columnvisible = new global::System.Data.DataColumn("visible", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnvisible);
+                this.columncantidad_en_dias = new global::System.Data.DataColumn("cantidad_en_dias", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncantidad_en_dias);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -3428,6 +3442,22 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public int cantidad_en_dias {
+                get {
+                    try {
+                        return ((int)(this[this.tableTiposCuotas.cantidad_en_diasColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'cantidad_en_dias\' de la tabla \'TiposCuotas\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableTiposCuotas.cantidad_en_diasColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsdescripcionNull() {
                 return this.IsNull(this.tableTiposCuotas.descripcionColumn);
             }
@@ -3436,6 +3466,18 @@ namespace Gimnasio_AccesoDatos {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetdescripcionNull() {
                 this[this.tableTiposCuotas.descripcionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Iscantidad_en_diasNull() {
+                return this.IsNull(this.tableTiposCuotas.cantidad_en_diasColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setcantidad_en_diasNull() {
+                this[this.tableTiposCuotas.cantidad_en_diasColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6099,39 +6141,45 @@ VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@
             tableMapping.ColumnMappings.Add("descripcion", "descripcion");
             tableMapping.ColumnMappings.Add("valor", "valor");
             tableMapping.ColumnMappings.Add("visible", "visible");
+            tableMapping.ColumnMappings.Add("cantidad_en_dias", "cantidad_en_dias");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [tipos_cuotas] WHERE (([id] = @Original_id) AND ((@IsNull_descripcion" +
-                " = 1 AND [descripcion] IS NULL) OR ([descripcion] = @Original_descripcion)) AND " +
-                "([valor] = @Original_valor) AND ([visible] = @Original_visible))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [tipos_cuotas] WHERE (([id] = @Original_id) AND ((@IsNull_descripcion = 1 AND [descripcion] IS NULL) OR ([descripcion] = @Original_descripcion)) AND ([valor] = @Original_valor) AND ((@IsNull_cantidad_en_dias = 1 AND [cantidad_en_dias] IS NULL) OR ([cantidad_en_dias] = @Original_cantidad_en_dias)) AND ([visible] = @Original_visible))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_descripcion", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_descripcion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_valor", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_cantidad_en_dias", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cantidad_en_dias", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_cantidad_en_dias", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cantidad_en_dias", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_visible", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "visible", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [tipos_cuotas] ([descripcion], [valor], [visible]) VALUES (@descripci" +
-                "on, @valor, @visible);\r\nSELECT id, descripcion, valor, visible FROM tipos_cuotas" +
-                " WHERE (id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [tipos_cuotas] ([descripcion], [valor], [cantidad_en_dias], [visible]" +
+                ") VALUES (@descripcion, @valor, @cantidad_en_dias, @visible);\r\nSELECT id, descri" +
+                "pcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE (id = SCOPE_IDEN" +
+                "TITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@descripcion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@valor", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@cantidad_en_dias", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cantidad_en_dias", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@visible", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "visible", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [tipos_cuotas] SET [descripcion] = @descripcion, [valor] = @valor, [visible] = @visible WHERE (([id] = @Original_id) AND ((@IsNull_descripcion = 1 AND [descripcion] IS NULL) OR ([descripcion] = @Original_descripcion)) AND ([valor] = @Original_valor) AND ([visible] = @Original_visible));
-SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [tipos_cuotas] SET [descripcion] = @descripcion, [valor] = @valor, [cantidad_en_dias] = @cantidad_en_dias, [visible] = @visible WHERE (([id] = @Original_id) AND ((@IsNull_descripcion = 1 AND [descripcion] IS NULL) OR ([descripcion] = @Original_descripcion)) AND ([valor] = @Original_valor) AND ((@IsNull_cantidad_en_dias = 1 AND [cantidad_en_dias] IS NULL) OR ([cantidad_en_dias] = @Original_cantidad_en_dias)) AND ([visible] = @Original_visible));
+SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE (id = @id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@descripcion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@valor", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@cantidad_en_dias", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cantidad_en_dias", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@visible", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "visible", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_descripcion", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_descripcion", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_valor", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_cantidad_en_dias", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cantidad_en_dias", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_cantidad_en_dias", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cantidad_en_dias", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_visible", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "visible", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -6146,10 +6194,11 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[6];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[9];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        id, descripcion, valor, visible\r\nFROM            tipos_cuotas";
+            this._commandCollection[0].CommandText = "SELECT        id, descripcion, valor, cantidad_en_dias, visible\r\nFROM            " +
+                "tipos_cuotas";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -6159,27 +6208,46 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT        id, descripcion, valor, visible\r\nFROM            tipos_cuotas\r\nWHER" +
-                "E id = @id";
+            this._commandCollection[2].CommandText = "INSERT INTO tipos_cuotas (descripcion, valor, cantidad_en_dias, visible)\r\nVALUES " +
+                "(@descripcion, @valor, @cantidadEnDias, 1)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@descripcion", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "descripcion", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@valor", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@cantidadEnDias", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "cantidad_en_dias", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT descripcion, id, valor, visible FROM tipos_cuotas WHERE (CAST(id AS VARCHA" +
-                "R) = @campoBusqueda) OR (descripcion LIKE @campoBusqueda) OR (valor = @campoBusq" +
-                "uedaMonto)";
+            this._commandCollection[3].CommandText = "SELECT id FROM tipos_cuotas WHERE id = @id";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusqueda", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusquedaMonto", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = "SELECT descripcion, id, valor, visible FROM tipos_cuotas WHERE (visible = 1)";
+            this._commandCollection[4].CommandText = "SELECT cantidad_en_dias FROM tipos_cuotas WHERE id = @id";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[5].Connection = this.Connection;
-            this._commandCollection[5].CommandText = "SELECT valor FROM tipos_cuotas WHERE id= @id";
+            this._commandCollection[5].CommandText = "SELECT cantidad_en_dias, descripcion, id, valor, visible FROM tipos_cuotas WHERE " +
+                "(id = @id)";
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[6].Connection = this.Connection;
+            this._commandCollection[6].CommandText = "SELECT cantidad_en_dias, descripcion, id, valor, visible FROM tipos_cuotas WHERE " +
+                "(CAST(id AS VARCHAR) = @campoBusqueda) OR (descripcion LIKE @campoBusqueda) OR (" +
+                "valor = @campoBusquedaMonto)";
+            this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusqueda", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusquedaMonto", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[7].Connection = this.Connection;
+            this._commandCollection[7].CommandText = "SELECT cantidad_en_dias, descripcion, id, valor, visible FROM tipos_cuotas WHERE " +
+                "(visible = 1)";
+            this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[8] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[8].Connection = this.Connection;
+            this._commandCollection[8].CommandText = "SELECT valor FROM tipos_cuotas WHERE id= @id";
+            this._commandCollection[8].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6211,7 +6279,7 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTipoCuotaPorId(int id) {
-            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand = this.CommandCollection[5];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(id));
             DataSetGimnasio.TiposCuotasDataTable dataTable = new DataSetGimnasio.TiposCuotasDataTable();
             this.Adapter.Fill(dataTable);
@@ -6223,7 +6291,7 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTiposCuotasPor(string campoBusqueda, decimal campoBusquedaMonto) {
-            this.Adapter.SelectCommand = this.CommandCollection[3];
+            this.Adapter.SelectCommand = this.CommandCollection[6];
             if ((campoBusqueda == null)) {
                 throw new global::System.ArgumentNullException("campoBusqueda");
             }
@@ -6241,7 +6309,7 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTiposCuotasVisibles() {
-            this.Adapter.SelectCommand = this.CommandCollection[4];
+            this.Adapter.SelectCommand = this.CommandCollection[7];
             DataSetGimnasio.TiposCuotasDataTable dataTable = new DataSetGimnasio.TiposCuotasDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -6280,7 +6348,7 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_id, string Original_descripcion, decimal Original_valor, bool Original_visible) {
+        public virtual int Delete(int Original_id, string Original_descripcion, decimal Original_valor, global::System.Nullable<int> Original_cantidad_en_dias, bool Original_visible) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_id));
             if ((Original_descripcion == null)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
@@ -6291,7 +6359,15 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_descripcion));
             }
             this.Adapter.DeleteCommand.Parameters[3].Value = ((decimal)(Original_valor));
-            this.Adapter.DeleteCommand.Parameters[4].Value = ((bool)(Original_visible));
+            if ((Original_cantidad_en_dias.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_cantidad_en_dias.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.DeleteCommand.Parameters[6].Value = ((bool)(Original_visible));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -6312,7 +6388,7 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string descripcion, decimal valor, bool visible) {
+        public virtual int Insert(string descripcion, decimal valor, global::System.Nullable<int> cantidad_en_dias, bool visible) {
             if ((descripcion == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -6320,7 +6396,13 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
                 this.Adapter.InsertCommand.Parameters[0].Value = ((string)(descripcion));
             }
             this.Adapter.InsertCommand.Parameters[1].Value = ((decimal)(valor));
-            this.Adapter.InsertCommand.Parameters[2].Value = ((bool)(visible));
+            if ((cantidad_en_dias.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(cantidad_en_dias.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.InsertCommand.Parameters[3].Value = ((bool)(visible));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -6341,7 +6423,7 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string descripcion, decimal valor, bool visible, int Original_id, string Original_descripcion, decimal Original_valor, bool Original_visible, int id) {
+        public virtual int Update(string descripcion, decimal valor, global::System.Nullable<int> cantidad_en_dias, bool visible, int Original_id, string Original_descripcion, decimal Original_valor, global::System.Nullable<int> Original_cantidad_en_dias, bool Original_visible, int id) {
             if ((descripcion == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -6349,19 +6431,33 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(descripcion));
             }
             this.Adapter.UpdateCommand.Parameters[1].Value = ((decimal)(valor));
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((bool)(visible));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_id));
-            if ((Original_descripcion == null)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+            if ((cantidad_en_dias.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(cantidad_en_dias.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_descripcion));
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((decimal)(Original_valor));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((bool)(Original_visible));
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(id));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((bool)(visible));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_id));
+            if ((Original_descripcion == null)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_descripcion));
+            }
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((decimal)(Original_valor));
+            if ((Original_cantidad_en_dias.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_cantidad_en_dias.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((bool)(Original_visible));
+            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -6382,8 +6478,8 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string descripcion, decimal valor, bool visible, int Original_id, string Original_descripcion, decimal Original_valor, bool Original_visible) {
-            return this.Update(descripcion, valor, visible, Original_id, Original_descripcion, Original_valor, Original_visible, Original_id);
+        public virtual int Update(string descripcion, decimal valor, global::System.Nullable<int> cantidad_en_dias, bool visible, int Original_id, string Original_descripcion, decimal Original_valor, global::System.Nullable<int> Original_cantidad_en_dias, bool Original_visible) {
+            return this.Update(descripcion, valor, cantidad_en_dias, visible, Original_id, Original_descripcion, Original_valor, Original_cantidad_en_dias, Original_visible, Original_id);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6414,8 +6510,97 @@ SELECT id, descripcion, valor, visible FROM tipos_cuotas WHERE (id = @id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
+        public virtual int AñadirTipoCuota(string descripcion, decimal valor, int cantidadEnDias) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
+            if ((descripcion == null)) {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[0].Value = ((string)(descripcion));
+            }
+            command.Parameters[1].Value = ((decimal)(valor));
+            command.Parameters[2].Value = ((int)(cantidadEnDias));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual global::System.Nullable<int> ExisteTipoCuotaConId(int id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
+            command.Parameters[0].Value = ((int)(id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return new global::System.Nullable<int>();
+            }
+            else {
+                return new global::System.Nullable<int>(((int)(returnValue)));
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual global::System.Nullable<int> ObtenerCantidadDiasTipoCuotaPorId(int id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[4];
+            command.Parameters[0].Value = ((int)(id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return new global::System.Nullable<int>();
+            }
+            else {
+                return new global::System.Nullable<int>(((int)(returnValue)));
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual global::System.Nullable<decimal> ObtenerValorActualPorId(int id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[5];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[8];
             command.Parameters[0].Value = ((int)(id));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
