@@ -48,6 +48,8 @@ namespace Gimnasio_AccesoDatos {
         
         private global::System.Data.DataRelation relationFK_auditoria_usuario;
         
+        private global::System.Data.DataRelation relationFK_cuota_tipo_cuota1;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -353,6 +355,7 @@ namespace Gimnasio_AccesoDatos {
             this.relationFK_cuota_socio1 = this.Relations["FK_cuota_socio1"];
             this.relationFK_auditoria_tipo_cuota = this.Relations["FK_auditoria_tipo_cuota"];
             this.relationFK_auditoria_usuario = this.Relations["FK_auditoria_usuario"];
+            this.relationFK_cuota_tipo_cuota1 = this.Relations["FK_cuota_tipo_cuota1"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -397,6 +400,10 @@ namespace Gimnasio_AccesoDatos {
                         this.tableUsuarios.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableAuditoriaValorTiposCuota.id_usuarioColumn}, false);
             this.Relations.Add(this.relationFK_auditoria_usuario);
+            this.relationFK_cuota_tipo_cuota1 = new global::System.Data.DataRelation("FK_cuota_tipo_cuota1", new global::System.Data.DataColumn[] {
+                        this.tableTiposCuotas.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableCuotasConSocioYTipo.id_tipo_cuotaColumn}, false);
+            this.Relations.Add(this.relationFK_cuota_tipo_cuota1);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1217,6 +1224,8 @@ namespace Gimnasio_AccesoDatos {
             
             private global::System.Data.DataColumn columnvisible;
             
+            private global::System.Data.DataColumn columnvalor_tipo_cuota;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public CuotasDataTable() {
@@ -1316,6 +1325,14 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn valor_tipo_cuotaColumn {
+                get {
+                    return this.columnvalor_tipo_cuota;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1351,7 +1368,7 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public CuotasRow AddCuotasRow(SociosRow parentSociosRowByFK_cuota_socio, TiposCuotasRow parentTiposCuotasRowByFK_cuota_tipo_cuota, System.DateTime fecha_pago, System.DateTime fecha_vencimiento, string mes_que_abona, decimal monto_abonado, bool visible) {
+            public CuotasRow AddCuotasRow(SociosRow parentSociosRowByFK_cuota_socio, TiposCuotasRow parentTiposCuotasRowByFK_cuota_tipo_cuota, System.DateTime fecha_pago, System.DateTime fecha_vencimiento, string mes_que_abona, decimal monto_abonado, bool visible, decimal valor_tipo_cuota) {
                 CuotasRow rowCuotasRow = ((CuotasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1361,7 +1378,8 @@ namespace Gimnasio_AccesoDatos {
                         fecha_vencimiento,
                         mes_que_abona,
                         monto_abonado,
-                        visible};
+                        visible,
+                        valor_tipo_cuota};
                 if ((parentSociosRowByFK_cuota_socio != null)) {
                     columnValuesArray[1] = parentSociosRowByFK_cuota_socio[0];
                 }
@@ -1405,6 +1423,7 @@ namespace Gimnasio_AccesoDatos {
                 this.columnmes_que_abona = base.Columns["mes_que_abona"];
                 this.columnmonto_abonado = base.Columns["monto_abonado"];
                 this.columnvisible = base.Columns["visible"];
+                this.columnvalor_tipo_cuota = base.Columns["valor_tipo_cuota"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1426,6 +1445,8 @@ namespace Gimnasio_AccesoDatos {
                 base.Columns.Add(this.columnmonto_abonado);
                 this.columnvisible = new global::System.Data.DataColumn("visible", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnvisible);
+                this.columnvalor_tipo_cuota = new global::System.Data.DataColumn("valor_tipo_cuota", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnvalor_tipo_cuota);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -1916,6 +1937,10 @@ namespace Gimnasio_AccesoDatos {
             
             private global::System.Data.DataColumn columndescripcion_tipo_cuota;
             
+            private global::System.Data.DataColumn columnid_tipo_cuota;
+            
+            private global::System.Data.DataColumn columnvalor_tipo_cuota;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public CuotasConSocioYTipoDataTable() {
@@ -2031,6 +2056,22 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn id_tipo_cuotaColumn {
+                get {
+                    return this.columnid_tipo_cuota;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn valor_tipo_cuotaColumn {
+                get {
+                    return this.columnvalor_tipo_cuota;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2066,7 +2107,7 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public CuotasConSocioYTipoRow AddCuotasConSocioYTipoRow(System.DateTime fecha_pago, System.DateTime fecha_vencimiento, string mes_que_abona, decimal monto_abonado, bool visible, string nombre_socio, string apellido_socio, string descripcion_tipo_cuota) {
+            public CuotasConSocioYTipoRow AddCuotasConSocioYTipoRow(System.DateTime fecha_pago, System.DateTime fecha_vencimiento, string mes_que_abona, decimal monto_abonado, bool visible, string nombre_socio, string apellido_socio, string descripcion_tipo_cuota, decimal valor_tipo_cuota) {
                 CuotasConSocioYTipoRow rowCuotasConSocioYTipoRow = ((CuotasConSocioYTipoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2078,10 +2119,21 @@ namespace Gimnasio_AccesoDatos {
                         null,
                         nombre_socio,
                         apellido_socio,
-                        descripcion_tipo_cuota};
+                        descripcion_tipo_cuota,
+                        null,
+                        valor_tipo_cuota};
                 rowCuotasConSocioYTipoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCuotasConSocioYTipoRow);
                 return rowCuotasConSocioYTipoRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public CuotasConSocioYTipoRow FindByid_cuotaid_socioid_tipo_cuota(int id_cuota, int id_socio, int id_tipo_cuota) {
+                return ((CuotasConSocioYTipoRow)(this.Rows.Find(new object[] {
+                            id_cuota,
+                            id_socio,
+                            id_tipo_cuota})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2111,6 +2163,8 @@ namespace Gimnasio_AccesoDatos {
                 this.columnnombre_socio = base.Columns["nombre_socio"];
                 this.columnapellido_socio = base.Columns["apellido_socio"];
                 this.columndescripcion_tipo_cuota = base.Columns["descripcion_tipo_cuota"];
+                this.columnid_tipo_cuota = base.Columns["id_tipo_cuota"];
+                this.columnvalor_tipo_cuota = base.Columns["valor_tipo_cuota"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2136,6 +2190,14 @@ namespace Gimnasio_AccesoDatos {
                 base.Columns.Add(this.columnapellido_socio);
                 this.columndescripcion_tipo_cuota = new global::System.Data.DataColumn("descripcion_tipo_cuota", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescripcion_tipo_cuota);
+                this.columnid_tipo_cuota = new global::System.Data.DataColumn("id_tipo_cuota", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid_tipo_cuota);
+                this.columnvalor_tipo_cuota = new global::System.Data.DataColumn("valor_tipo_cuota", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnvalor_tipo_cuota);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnid_cuota,
+                                this.columnid_socio,
+                                this.columnid_tipo_cuota}, true));
                 this.columnid_cuota.AutoIncrement = true;
                 this.columnid_cuota.AutoIncrementSeed = -1;
                 this.columnid_cuota.AutoIncrementStep = -1;
@@ -2160,6 +2222,13 @@ namespace Gimnasio_AccesoDatos {
                 this.columnapellido_socio.MaxLength = 100;
                 this.columndescripcion_tipo_cuota.Caption = "descripcion";
                 this.columndescripcion_tipo_cuota.MaxLength = 50;
+                this.columnid_tipo_cuota.AutoIncrement = true;
+                this.columnid_tipo_cuota.AutoIncrementSeed = -1;
+                this.columnid_tipo_cuota.AutoIncrementStep = -1;
+                this.columnid_tipo_cuota.AllowDBNull = false;
+                this.columnid_tipo_cuota.ReadOnly = true;
+                this.columnid_tipo_cuota.Caption = "id2";
+                this.columnvalor_tipo_cuota.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3356,6 +3425,22 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public decimal valor_tipo_cuota {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableCuotas.valor_tipo_cuotaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'valor_tipo_cuota\' de la tabla \'Cuotas\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCuotas.valor_tipo_cuotaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SociosRow SociosRow {
                 get {
                     return ((SociosRow)(this.GetParentRow(this.Table.ParentRelations["FK_cuota_socio"])));
@@ -3374,6 +3459,18 @@ namespace Gimnasio_AccesoDatos {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_cuota_tipo_cuota"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Isvalor_tipo_cuotaNull() {
+                return this.IsNull(this.tableCuotas.valor_tipo_cuotaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setvalor_tipo_cuotaNull() {
+                this[this.tableCuotas.valor_tipo_cuotaColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3499,6 +3596,17 @@ namespace Gimnasio_AccesoDatos {
                 }
                 else {
                     return ((AuditoriaValorTiposCuotaRow[])(base.GetChildRows(this.Table.ChildRelations["FK_auditoria_tipo_cuota"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public CuotasConSocioYTipoRow[] GetCuotasConSocioYTipoRows() {
+                if ((this.Table.ChildRelations["FK_cuota_tipo_cuota1"] == null)) {
+                    return new CuotasConSocioYTipoRow[0];
+                }
+                else {
+                    return ((CuotasConSocioYTipoRow[])(base.GetChildRows(this.Table.ChildRelations["FK_cuota_tipo_cuota1"])));
                 }
             }
         }
@@ -3647,12 +3755,45 @@ namespace Gimnasio_AccesoDatos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public int id_tipo_cuota {
+                get {
+                    return ((int)(this[this.tableCuotasConSocioYTipo.id_tipo_cuotaColumn]));
+                }
+                set {
+                    this[this.tableCuotasConSocioYTipo.id_tipo_cuotaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public decimal valor_tipo_cuota {
+                get {
+                    return ((decimal)(this[this.tableCuotasConSocioYTipo.valor_tipo_cuotaColumn]));
+                }
+                set {
+                    this[this.tableCuotasConSocioYTipo.valor_tipo_cuotaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SociosRow SociosRow {
                 get {
                     return ((SociosRow)(this.GetParentRow(this.Table.ParentRelations["FK_cuota_socio1"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_cuota_socio1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public TiposCuotasRow TiposCuotasRow {
+                get {
+                    return ((TiposCuotasRow)(this.GetParentRow(this.Table.ParentRelations["FK_cuota_tipo_cuota1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_cuota_tipo_cuota1"]);
                 }
             }
             
@@ -5682,11 +5823,11 @@ SELECT id, id_socio, id_tipo_cuota, fecha_pago, fecha_vencimiento, mes_que_abona
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        id, id_socio, id_tipo_cuota, fecha_pago, fecha_vencimiento, mes_que" +
-                "_abona, monto_abonado, visible\r\nFROM            cuotas";
+            this._commandCollection[0].CommandText = "SELECT id, id_socio, id_tipo_cuota, fecha_pago, fecha_vencimiento, mes_que_abona," +
+                " monto_abonado, visible FROM cuotas";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -5705,9 +5846,9 @@ SELECT id, id_socio, id_tipo_cuota, fecha_pago, fecha_vencimiento, mes_que_abona
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
             this._commandCollection[2].CommandText = @"INSERT INTO cuotas
-                         (id_socio, id_tipo_cuota, fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, visible)
+                         (id_socio, id_tipo_cuota, fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, visible)
 OUTPUT  INSERTED.id
-VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@montoAbonado, 1)";
+VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@montoAbonado, @valorTipoCuota, 1)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idSocio", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_socio", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idTipoCuota", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_tipo_cuota", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -5715,24 +5856,17 @@ VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@fechaVencimiento", global::System.Data.SqlDbType.Date, 3, global::System.Data.ParameterDirection.Input, 0, 0, "fecha_vencimiento", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@mesQueAbona", global::System.Data.SqlDbType.VarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, "mes_que_abona", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@montoAbonado", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "monto_abonado", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@valorTipoCuota", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "valor_tipo_cuota", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"SELECT fecha_pago, fecha_vencimiento, id, id_socio, id_tipo_cuota, mes_que_abona, monto_abonado, visible FROM cuotas AS uc WHERE (id_socio = @idSocio) AND (fecha_vencimiento = (SELECT MAX(fecha_vencimiento) AS Expr1 FROM cuotas WHERE (id_socio = @idSocio)))";
+            this._commandCollection[3].CommandText = "SELECT id FROM cuotas WHERE (id = @id)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idSocio", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_socio", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(DataSetGimnasio.CuotasDataTable dataTable) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = @"SELECT fecha_pago, fecha_vencimiento, id, id_socio, id_tipo_cuota, mes_que_abona, monto_abonado, valor_tipo_cuota, visible FROM cuotas AS uc WHERE (id_socio = @idSocio) AND (fecha_vencimiento = (SELECT MAX(fecha_vencimiento) AS Expr1 FROM cuotas WHERE (id_socio = @idSocio)))";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idSocio", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_socio", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5751,7 +5885,7 @@ VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSetGimnasio.CuotasDataTable ObtenerUltimaCuotaPorIdSocio(int idSocio) {
-            this.Adapter.SelectCommand = this.CommandCollection[3];
+            this.Adapter.SelectCommand = this.CommandCollection[4];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(idSocio));
             DataSetGimnasio.CuotasDataTable dataTable = new DataSetGimnasio.CuotasDataTable();
             this.Adapter.Fill(dataTable);
@@ -5975,7 +6109,7 @@ VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
-        public virtual int AñadirCuota(int idSocio, int idTipoCuota, string fechaPago, string fechaVencimiento, string mesQueAbona, decimal montoAbonado) {
+        public virtual int AñadirCuota(int idSocio, int idTipoCuota, string fechaPago, string fechaVencimiento, string mesQueAbona, decimal montoAbonado, global::System.Nullable<decimal> valorTipoCuota) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
             command.Parameters[0].Value = ((int)(idSocio));
             command.Parameters[1].Value = ((int)(idTipoCuota));
@@ -5998,6 +6132,12 @@ VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@
                 command.Parameters[4].Value = ((string)(mesQueAbona));
             }
             command.Parameters[5].Value = ((decimal)(montoAbonado));
+            if ((valorTipoCuota.HasValue == true)) {
+                command.Parameters[6].Value = ((decimal)(valorTipoCuota.Value));
+            }
+            else {
+                command.Parameters[6].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -6013,6 +6153,35 @@ VALUES        (@idSocio,@idTipoCuota,@fechaPago,@fechaVencimiento,@mesQueAbona,@
                 }
             }
             return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual global::System.Nullable<int> ExisteCuotaConId(int id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
+            command.Parameters[0].Value = ((int)(id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return new global::System.Nullable<int>();
+            }
+            else {
+                return new global::System.Nullable<int>(((int)(returnValue)));
+            }
         }
     }
     
@@ -6194,7 +6363,7 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[10];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[11];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        id, descripcion, valor, cantidad_en_dias, visible\r\nFROM            " +
@@ -6232,28 +6401,33 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
             this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[6].Connection = this.Connection;
-            this._commandCollection[6].CommandText = "SELECT cantidad_en_dias, descripcion, id, valor, visible FROM tipos_cuotas WHERE " +
-                "(id = @id)";
+            this._commandCollection[6].CommandText = "SELECT valor FROM tipos_cuotas WHERE id = @id";
             this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[7].Connection = this.Connection;
             this._commandCollection[7].CommandText = "SELECT cantidad_en_dias, descripcion, id, valor, visible FROM tipos_cuotas WHERE " +
-                "(CAST(id AS VARCHAR) = @campoBusqueda) OR (descripcion LIKE @campoBusqueda) OR (" +
-                "valor = @campoBusquedaMonto)";
+                "(id = @id)";
             this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusqueda", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusquedaMonto", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[8] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[8].Connection = this.Connection;
             this._commandCollection[8].CommandText = "SELECT cantidad_en_dias, descripcion, id, valor, visible FROM tipos_cuotas WHERE " +
-                "(visible = 1)";
+                "(CAST(id AS VARCHAR) = @campoBusqueda) OR (descripcion LIKE @campoBusqueda) OR (" +
+                "valor = @campoBusquedaMonto)";
             this._commandCollection[8].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusqueda", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusquedaMonto", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "valor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[9] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[9].Connection = this.Connection;
-            this._commandCollection[9].CommandText = "SELECT valor FROM tipos_cuotas WHERE id= @id";
+            this._commandCollection[9].CommandText = "SELECT cantidad_en_dias, descripcion, id, valor, visible FROM tipos_cuotas WHERE " +
+                "(visible = 1)";
             this._commandCollection[9].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[9].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[10] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[10].Connection = this.Connection;
+            this._commandCollection[10].CommandText = "SELECT valor FROM tipos_cuotas WHERE id= @id";
+            this._commandCollection[10].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[10].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6285,7 +6459,7 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTipoCuotaPorId(int id) {
-            this.Adapter.SelectCommand = this.CommandCollection[6];
+            this.Adapter.SelectCommand = this.CommandCollection[7];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(id));
             DataSetGimnasio.TiposCuotasDataTable dataTable = new DataSetGimnasio.TiposCuotasDataTable();
             this.Adapter.Fill(dataTable);
@@ -6297,7 +6471,7 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTiposCuotasPor(string campoBusqueda, decimal campoBusquedaMonto) {
-            this.Adapter.SelectCommand = this.CommandCollection[7];
+            this.Adapter.SelectCommand = this.CommandCollection[8];
             if ((campoBusqueda == null)) {
                 throw new global::System.ArgumentNullException("campoBusqueda");
             }
@@ -6315,7 +6489,7 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSetGimnasio.TiposCuotasDataTable ObtenerTiposCuotasVisibles() {
-            this.Adapter.SelectCommand = this.CommandCollection[8];
+            this.Adapter.SelectCommand = this.CommandCollection[9];
             DataSetGimnasio.TiposCuotasDataTable dataTable = new DataSetGimnasio.TiposCuotasDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -6630,8 +6804,37 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual global::System.Nullable<decimal> ObtenerMontoActualTipoCuotaPorId(int id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[6];
+            command.Parameters[0].Value = ((int)(id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return new global::System.Nullable<decimal>();
+            }
+            else {
+                return new global::System.Nullable<decimal>(((decimal)(returnValue)));
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual global::System.Nullable<decimal> ObtenerValorActualPorId(int id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[9];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[10];
             command.Parameters[0].Value = ((int)(id));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -6788,6 +6991,8 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
             tableMapping.ColumnMappings.Add("nombre", "nombre_socio");
             tableMapping.ColumnMappings.Add("apellido", "apellido_socio");
             tableMapping.ColumnMappings.Add("descripcion", "descripcion_tipo_cuota");
+            tableMapping.ColumnMappings.Add("id2", "id_tipo_cuota");
+            tableMapping.ColumnMappings.Add("valor_tipo_cuota", "valor_tipo_cuota");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -6804,8 +7009,8 @@ SELECT id, descripcion, valor, cantidad_en_dias, visible FROM tipos_cuotas WHERE
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[7];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT        c.id,fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, c.visible,
-                     s.id, s.nombre, s.apellido, t.descripcion
+            this._commandCollection[0].CommandText = @"SELECT        c.id,fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, c.visible,
+                     s.id, s.nombre, s.apellido, t.id, t.descripcion
 FROM            cuotas AS c
            JOIN socios AS s
                    ON c.id_socio = s.id
@@ -6814,8 +7019,8 @@ FROM            cuotas AS c
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT        c.id,fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, c.visible,
-                     s.id, s.nombre, s.apellido, t.descripcion
+            this._commandCollection[1].CommandText = @"SELECT        c.id,fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, c.visible,
+                     s.id, s.nombre, s.apellido, t.id, t.descripcion
 FROM            cuotas AS c
            JOIN socios AS s
                    ON c.id_socio = s.id
@@ -6826,8 +7031,8 @@ WHERE c.id = @idCuota";
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idCuota", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT        c.id,fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, c.visible,
-                     s.id, s.nombre, s.apellido, t.descripcion
+            this._commandCollection[2].CommandText = @"SELECT        c.id,fecha_pago, fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, c.visible,
+                     s.id, s.nombre, s.apellido, t.id, t.descripcion
 FROM            cuotas AS c
            JOIN socios AS s
                    ON c.id_socio = s.id
@@ -6846,8 +7051,8 @@ WHERE CAST(c.id AS VARCHAR) LIKE @campoBusqueda OR
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusquedaMonto", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "monto_abonado", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"SELECT cpv.id, cpv.fecha_pago, cpv.fecha_vencimiento, mes_que_abona, monto_abonado, cpv.visible,
-	   s.id, s.nombre, s.apellido, t.descripcion 
+            this._commandCollection[3].CommandText = @"SELECT cpv.id, cpv.fecha_pago, cpv.fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, cpv.visible,
+	   s.id, s.nombre, s.apellido, t.id, t.descripcion 
 FROM cuotas AS cpv
 JOIN
 socios AS s
@@ -6864,8 +7069,8 @@ WHERE  cpv.fecha_vencimiento >= CAST(GETDATE() AS DATE) AND
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = @"SELECT cpv.id, cpv.fecha_pago, cpv.fecha_vencimiento, mes_que_abona, monto_abonado, cpv.visible,
-	   s.id, s.nombre, s.apellido, t.descripcion 
+            this._commandCollection[4].CommandText = @"SELECT cpv.id, cpv.fecha_pago, cpv.fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, cpv.visible,
+	   s.id, s.nombre, s.apellido, t.id, t.descripcion 
 FROM cuotas AS cpv
 JOIN
 socios AS s
@@ -6892,7 +7097,7 @@ WHERE  cpv.fecha_vencimiento >= CAST(GETDATE() AS DATE) AND
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusquedaMonto", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 0, 0, "monto_abonado", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[5].Connection = this.Connection;
-            this._commandCollection[5].CommandText = @"SELECT cv.id, cv.fecha_pago, cv.fecha_vencimiento, mes_que_abona, monto_abonado, cv.visible,
+            this._commandCollection[5].CommandText = @"SELECT cv.id, cv.fecha_pago, cv.fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, cv.visible,
 	   s.id, s.nombre, s.apellido, t.descripcion 
 FROM cuotas AS cv
 JOIN
@@ -6909,7 +7114,7 @@ WHERE CAST(GETDATE() AS DATE) > cv.fecha_vencimiento AND
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[6].Connection = this.Connection;
-            this._commandCollection[6].CommandText = @"SELECT cv.id, cv.fecha_pago, cv.fecha_vencimiento, mes_que_abona, monto_abonado, cv.visible,
+            this._commandCollection[6].CommandText = @"SELECT cv.id, cv.fecha_pago, cv.fecha_vencimiento, mes_que_abona, monto_abonado, valor_tipo_cuota, cv.visible,
 	   s.id, s.nombre, s.apellido, t.descripcion 
 FROM cuotas AS cv
 JOIN
