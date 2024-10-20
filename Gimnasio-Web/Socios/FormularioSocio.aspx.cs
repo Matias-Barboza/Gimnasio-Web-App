@@ -101,6 +101,7 @@ namespace Gimnasio_Web.Socios
 
         public void VincularDatosACuota(Cuota cuota, int idSocio)
         {
+            TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
             int cantidad = int.Parse(CantidadTextBox.Text);
 
             cuota.Socio.Id = idSocio;
@@ -109,6 +110,7 @@ namespace Gimnasio_Web.Socios
             cuota.FechaVencimiento = CuotaNegocio.FechaVencimientoCalculada(cuota.FechaPago, cuota.TipoCuota.Id, cantidad);
             cuota.MesQueAbona = MesQueAbonaTextBox.Text;
             cuota.MontoAbonado = decimal.Parse(MontoAbonarTextBox.Text);
+            cuota.ValorTipoCuota = tipoCuotaNegocio.ObtenerMontoActualTipoCuotaPorId(cuota.TipoCuota.Id);
         }
 
         public void EliminarDatosSession()
