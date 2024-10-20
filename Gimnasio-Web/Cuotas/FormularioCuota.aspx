@@ -153,11 +153,17 @@
                     </div>
 
                     <div class="d-flex justify-content-center align-items-center">
-                        <asp:Button ID="RegistrarCuotaButton" OnClick="RegistrarCuotaButton_Click" Text="Registrar" CausesValidation="true"
-                            ValidationGroup="OperacionValidationGroup" CssClass="btn btn-primary btn-lg" runat="server" />
+                        <%if (EsEdicion)
+                            {%>
                         <asp:Button ID="EditarCuotaButton" OnClick="EditarCuotaButton_Click" Text="Editar" CausesValidation="true" ValidationGroup="OperacionValidationGroup"
                             CssClass="btn btn-primary btn-lg px-4 me-1" runat="server" />
-                        <a href="/Socios/ListadoSocios.aspx" class="btn btn-danger btn-lg ms-1">Cancelar</a>
+                        <%}
+                        else
+                        {%>
+                        <asp:Button ID="RegistrarCuotaButton" OnClick="RegistrarCuotaButton_Click" Text="Registrar" CausesValidation="true"
+                            ValidationGroup="OperacionValidationGroup" CssClass="btn btn-primary btn-lg" runat="server" />
+                        <%}%>
+                        <a href="/Cuotas/ListadoCuotas.aspx" class="btn btn-danger btn-lg ms-1">Cancelar</a>
                     </div>
 
                 </div>

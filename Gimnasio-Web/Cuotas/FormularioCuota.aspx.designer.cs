@@ -231,15 +231,6 @@ namespace Gimnasio_Web.Cuotas
         protected global::System.Web.UI.WebControls.TextBox MesQueAbonaTextBox;
 
         /// <summary>
-        /// Control RegistrarCuotaButton.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RegistrarCuotaButton;
-
-        /// <summary>
         /// Control EditarCuotaButton.
         /// </summary>
         /// <remarks>
@@ -247,5 +238,14 @@ namespace Gimnasio_Web.Cuotas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button EditarCuotaButton;
+
+        /// <summary>
+        /// Control RegistrarCuotaButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button RegistrarCuotaButton;
     }
 }

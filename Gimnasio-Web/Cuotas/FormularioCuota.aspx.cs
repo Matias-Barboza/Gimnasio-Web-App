@@ -12,16 +12,60 @@ namespace Gimnasio_Web.Cuotas
 {
     public partial class FormularioCuota : System.Web.UI.Page
     {
+        public bool EsEdicion;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            bool convertido = int.TryParse(Request.QueryString["id"], out int idCuota);
+
+            if (Request.QueryString.Count != 0)
+            {
+                if (!convertido) 
+                {
+                    return;
+                }
+
+                if (!ExisteCuotaConId(idCuota))
+                {
+                    return;
+                }
+
+                EsEdicion = true;
+            }
+
             if (!IsPostBack) 
             {
                 CargarDropDownListTiposCuotas();
                 EliminarDatosSession();
+
+                if (EsEdicion) 
+                {
+                    CargarDatosCuotaAEditar(idCuota);
+                    CargarValoresCalculadosYSocioBuscado();
+                }
             }
         }
 
         //-------------------------------------------------- MÉTODOS ------------------------------------------------------------------------------------------
+        public void CargarDatosCuotaAEditar(int idCuota) 
+        {
+            try
+            {
+                CuotaNegocio cuotaNegocio = new CuotaNegocio();
+                SocioNegocio socioNegocio = new SocioNegocio();
+                Cuota cuota = cuotaNegocio.ObtenerCuotaConSocioYTipoPorIdCuota(idCuota);
+                Socio socio = socioNegocio.ObtenerSocioPorId(cuota.Socio.Id);
+
+                VincularDatosCuotaAFormulario(cuota);
+                VincularDatosSocioAFormulario(socio);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public void CargarDropDownListTiposCuotas() 
         {
             try
@@ -53,6 +97,15 @@ namespace Gimnasio_Web.Cuotas
             MesQueAbonaTextBox.Text = DateTime.Today.ToString("MMMM", new CultureInfo("es-ES"));
         }
 
+        public void VincularDatosCuotaAFormulario(Cuota cuota) 
+        {
+            TiposCuotasDropDownList.Items.FindByValue(cuota.TipoCuota.Id.ToString()).Selected = true;
+            CantidadTextBox.Text = ((int)(cuota.MontoAbonado / cuota.ValorTipoCuota)).ToString();
+            MontoAbonarTextBox.Text = cuota.MontoAbonado.ToString("C2").Substring(2);
+            FechaPagoTextBox.Text = cuota.FechaPago.ToString("yyyy-MM-dd");
+            MesQueAbonaTextBox.Text = cuota.MesQueAbona;
+        }
+        
         public void VincularDatosSocioAFormulario(Socio socio) 
         {
             CodigoSocioTextBox.Text = socio.Id.ToString();
@@ -70,6 +123,7 @@ namespace Gimnasio_Web.Cuotas
 
         public void VincularDatosACuota(Cuota cuota, bool conSocioSession = false) 
         {
+            TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
             int cantidad = Convert.ToInt32(CantidadTextBox.Text);
 
             if (conSocioSession) 
@@ -82,11 +136,25 @@ namespace Gimnasio_Web.Cuotas
             cuota.FechaVencimiento = CuotaNegocio.FechaVencimientoCalculada(cuota.FechaPago, cuota.TipoCuota.Id, cantidad);
             cuota.MesQueAbona = MesQueAbonaTextBox.Text;
             cuota.MontoAbonado = decimal.Parse(MontoAbonarTextBox.Text);
+            cuota.ValorTipoCuota = tipoCuotaNegocio.ObtenerMontoActualTipoCuotaPorId(cuota.TipoCuota.Id);
         }
 
         public void EliminarDatosSession() 
         {
             Session.Remove("SocioBuscado");
+        }
+
+        public void CargarValoresCalculadosYSocioBuscado() 
+        {
+            string idTipoCuotaStr = TiposCuotasDropDownList.SelectedItem.Value;
+            string cantidadStr = CantidadTextBox.Text;
+            List<string> valoresCalculados = new List<string>() { idTipoCuotaStr, cantidadStr, MontoAbonarTextBox.Text };
+            int.TryParse(CodigoSocioTextBox.Text, out int idSocio);
+            SocioNegocio socioNegocio = new SocioNegocio();
+            Socio socio = socioNegocio.ObtenerSocioPorId(idSocio);
+
+            Session.Add("ValoresCalculados", valoresCalculados);
+            Session.Add("SocioBuscado", socio);
         }
 
         //-------------------------------------------------- FUNCIONES ----------------------------------------------------------------------------------------
@@ -108,6 +176,20 @@ namespace Gimnasio_Web.Cuotas
             CodigoSocioExistenteValidator.Validate();
 
             return CodigoSocioNoVacioValidator.IsValid && CodigoSocioSoloNumerosValidator.IsValid && CodigoSocioExistenteValidator.IsValid;
+        }
+
+        private bool ExisteCuotaConId(int idCuota)
+        {
+            try
+            {
+                CuotaNegocio cuotaNegocio = new CuotaNegocio();
+
+                return cuotaNegocio.ExisteCuotaConId(idCuota);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
@@ -151,11 +233,14 @@ namespace Gimnasio_Web.Cuotas
             try
             {
                 TipoCuotaNegocio tipoCuotaNegocio;
+                CuotaNegocio cuotaNegocio;
                 List<string> valoresCalculados;
                 string idTipoCuotaStr = TiposCuotasDropDownList.SelectedItem.Value;
                 string cantidadStr = CantidadTextBox.Text;
                 int idTipoCuota;
                 int cantidad;
+                decimal valorTipoCuota = 0;
+                bool mismoTipoCuota = false;
 
                 if (!TipoCuotaYCantidadValidos())
                 {
@@ -166,8 +251,17 @@ namespace Gimnasio_Web.Cuotas
                 idTipoCuota = int.Parse(idTipoCuotaStr);
                 cantidad = int.Parse(cantidadStr);
 
+                if (EsEdicion) 
+                {
+                    cuotaNegocio = new CuotaNegocio();
+                    int idCuota = int.Parse(Request.QueryString["id"]);
+                    Cuota cuota = cuotaNegocio.ObtenerCuotaConSocioYTipoPorIdCuota(idCuota);
+                    valorTipoCuota = cuota.ValorTipoCuota;
+                    mismoTipoCuota = cuota.TipoCuota.Id == idTipoCuota;
+                }
 
-                MontoAbonarTextBox.Text = tipoCuotaNegocio.CalcularMontoAbonar(idTipoCuota, cantidad);
+                MontoAbonarTextBox.Text = mismoTipoCuota ? tipoCuotaNegocio.CalcularMontoAbonar(valorTipoCuota, cantidad) :
+                                                           tipoCuotaNegocio.CalcularMontoAbonar(idTipoCuota, cantidad);
 
                 valoresCalculados = new List<string>() { idTipoCuotaStr, cantidadStr, MontoAbonarTextBox.Text };
 
