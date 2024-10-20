@@ -68,6 +68,7 @@
     <Content Include="Css\styles.css" />
     <Content Include="Cuotas\FormularioCuota.aspx" />
     <Content Include="Cuotas\FormularioTipoCuota.aspx" />
+    <Content Include="Cuotas\HistorialTipoCuota.aspx" />
     <Content Include="Cuotas\ListadoCuotas.aspx" />
     <Content Include="Cuotas\ListadoTiposCuota.aspx" />
     <Content Include="Default.aspx" />
@@ -92,6 +93,13 @@
     </Compile>
     <Compile Include="Cuotas\FormularioTipoCuota.aspx.designer.cs">
       <DependentUpon>FormularioTipoCuota.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cuotas\HistorialTipoCuota.aspx.cs">
+      <DependentUpon>HistorialTipoCuota.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cuotas\HistorialTipoCuota.aspx.designer.cs">
+      <DependentUpon>HistorialTipoCuota.aspx</DependentUpon>
     </Compile>
     <Compile Include="Cuotas\ListadoCuotas.aspx.cs">
       <DependentUpon>ListadoCuotas.aspx</DependentUpon>
