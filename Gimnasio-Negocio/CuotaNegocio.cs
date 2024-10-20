@@ -15,14 +15,15 @@ namespace Gimnasio_Negocio
         public int AñadirCuota(Cuota cuota) 
         {
             CuotasTableAdapter cuotasTableAdapter = new CuotasTableAdapter();
-            
-            return (int) cuotasTableAdapter.AñadirCuota(
+
+            return (int)cuotasTableAdapter.AñadirCuota(
                                             cuota.Socio.Id,
                                             cuota.TipoCuota.Id,
                                             cuota.FechaPago.ToString("yyyy-MM-dd"),
                                             cuota.FechaVencimiento.ToString("yyyy-MM-dd"),
                                             cuota.MesQueAbona,
-                                            cuota.MontoAbonado
+                                            cuota.MontoAbonado,
+                                            cuota.ValorTipoCuota
                                             );
         }
 
@@ -44,6 +45,13 @@ namespace Gimnasio_Negocio
             return cuotaActualizada;
         }
 
+        public bool ExisteCuotaConId(int idCuota) 
+        {
+            CuotasTableAdapter cuotasTableAdapter = new CuotasTableAdapter();
+
+            return cuotasTableAdapter.ExisteCuotaConId(idCuota) != null;
+        }
+
         public Cuota ObtenerUltimaCuotaPorIdSocio(int idSocio) 
         {
             CuotasTableAdapter cuotasTableAdapter = new CuotasTableAdapter();
@@ -59,6 +67,7 @@ namespace Gimnasio_Negocio
                 ultimaCuota.FechaVencimiento = cuotaFila.fecha_vencimiento;
                 ultimaCuota.MesQueAbona = cuotaFila.mes_que_abona;
                 ultimaCuota.MontoAbonado = cuotaFila.monto_abonado;
+                ultimaCuota.ValorTipoCuota = cuotaFila.valor_tipo_cuota;
                 ultimaCuota.Visible = cuotaFila.visible;
                 ultimaCuota.Socio.Id = cuotaFila.id_socio;
                 ultimaCuota.TipoCuota.Id = cuotaFila.id_tipo_cuota;
@@ -82,9 +91,11 @@ namespace Gimnasio_Negocio
                 cuotaBuscada.FechaVencimiento = cuotaFila.fecha_vencimiento;
                 cuotaBuscada.MesQueAbona = cuotaFila.mes_que_abona;
                 cuotaBuscada.MontoAbonado = cuotaFila.monto_abonado;
+                cuotaBuscada.ValorTipoCuota = cuotaFila.valor_tipo_cuota;
                 cuotaBuscada.Socio.Id = cuotaFila.id_socio;
                 cuotaBuscada.Socio.Nombre = cuotaFila.nombre_socio;
                 cuotaBuscada.Socio.Apellido = cuotaFila.apellido_socio;
+                cuotaBuscada.TipoCuota.Id = cuotaFila.id_tipo_cuota;
                 cuotaBuscada.TipoCuota.Descripcion = cuotaFila.descripcion_tipo_cuota;
             }
 
@@ -141,9 +152,11 @@ namespace Gimnasio_Negocio
                 cuota.FechaVencimiento = cuotaFila.fecha_vencimiento;
                 cuota.MesQueAbona = cuotaFila.mes_que_abona;
                 cuota.MontoAbonado = cuotaFila.monto_abonado;
+                cuota.ValorTipoCuota = cuotaFila.valor_tipo_cuota;
                 cuota.Socio.Id = cuotaFila.id_socio;
                 cuota.Socio.Nombre = cuotaFila.nombre_socio;
                 cuota.Socio.Apellido = cuotaFila.apellido_socio;
+                cuota.TipoCuota.Id = cuotaFila.id_tipo_cuota;
                 cuota.TipoCuota.Descripcion = cuotaFila.descripcion_tipo_cuota;
 
                 listaCuotas.Add(cuota);
