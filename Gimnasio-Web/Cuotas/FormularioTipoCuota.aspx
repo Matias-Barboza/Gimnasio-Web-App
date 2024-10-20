@@ -20,7 +20,7 @@
                         <h4>Datos del tipo de cuota</h4>
                         <hr class="mt-0" />
                         <div class="d-flex">
-                            <div class="col mb-1">
+                            <div class="col mb-1 me-2">
                                 <label for="DescripcionTextBox" class="form-label">Descripción</label>
                                 <asp:TextBox ID="DescripcionTextBox" PlaceHolder="Ej: Diaria" CssClass="form-control" runat="server"></asp:TextBox>
                                 <div>
