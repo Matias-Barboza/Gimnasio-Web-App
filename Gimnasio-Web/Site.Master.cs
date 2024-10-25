@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Gimnasio_Dominio;
+using Gimnasio_Utilidades;
 using Gimnasio_Web.Cuotas;
 using Gimnasio_Web.Socios;
 
@@ -14,6 +15,23 @@ namespace Gimnasio_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["UsuarioSessionActual"] == null) 
+            {
+                // Debe redirigir
+                return;
+            }
+
+            Usuario usuario = (Usuario) Session["UsuarioSessionActual"];
+
+            if (PermisoHelper.PaginaNecesitaPermisoAdmin(Page)) 
+            {
+                if (!Seguridad.UsuarioEsAdmin(usuario)) 
+                {
+                    // Debe redirigir
+                    return;
+                }
+            }
+
             CargarMensajeHeader();
         }
 
