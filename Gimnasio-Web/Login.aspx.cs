@@ -1,5 +1,6 @@
 ﻿using Gimnasio_Dominio;
 using Gimnasio_Negocio;
+using Gimnasio_Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,16 @@ namespace Gimnasio_Web
 
             try
             {
+                string passwordEncriptada = Seguridad.GetSHA256(PasswordTextBox.Text);
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-                Usuario usuario = usuarioNegocio.ObtenerUsuarioPor(UsuarioTextBox.Text, PasswordTextBox.Text);
+                Usuario usuario = usuarioNegocio.ObtenerUsuarioPor(UsuarioTextBox.Text, passwordEncriptada);
 
-                Session.Add("UsuarioSessionActual", usuario);
-                Response.Redirect("Default.aspx");
+                if (usuario != null) 
+                {
+                    usuario.Password = string.Empty;
+                    Session.Add("UsuarioSessionActual", usuario);
+                    Response.Redirect("Default.aspx", false);
+                }
             }
             catch (Exception)
             {
@@ -52,8 +58,7 @@ namespace Gimnasio_Web
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
                 Usuario usuario = new Usuario()
                 {
-                    NombreUsuario = UsuarioTextBox.Text,
-                    Password = PasswordTextBox.Text
+                    NombreUsuario = UsuarioTextBox.Text
                 };
 
                 args.IsValid = usuarioNegocio.ExisteUsuario(usuario);
@@ -77,7 +82,7 @@ namespace Gimnasio_Web
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
                 Usuario usuario = new Usuario() { 
                     NombreUsuario = UsuarioTextBox.Text,
-                    Password = PasswordTextBox.Text
+                    Password = Seguridad.GetSHA256(PasswordTextBox.Text)
                 };
 
                 args.IsValid = usuarioNegocio.InformacionCorrectaUsuario(usuario);
