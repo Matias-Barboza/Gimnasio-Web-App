@@ -15,9 +15,23 @@ namespace Gimnasio_Negocio
         public bool ExisteUsuario(Usuario usuario) 
         {
             UsuariosTableAdapter usuariosTableAdapter = new UsuariosTableAdapter();
-            DataTable usuariosDataTable = usuariosTableAdapter.ExisteUsuario(usuario.NombreUsuario);
+            DataTable usuariosDataTable = usuariosTableAdapter.ObtenerNombresUsuarios(usuario.NombreUsuario);
+            List<string> nombresUsuarios = new List<string>();
 
-            return usuariosDataTable.Rows.Count == 1;
+            if (usuariosDataTable.Rows.Count == 0) 
+            {
+                return false;
+            }
+
+            foreach (DataSetGimnasio.UsuariosRow usuarioFila in usuariosDataTable.Rows)
+            {
+                nombresUsuarios.Add(usuarioFila.nombre_usuario);
+            }
+
+            usuariosTableAdapter.Dispose();
+            usuariosDataTable.Dispose();
+
+            return nombresUsuarios.Contains(usuario.NombreUsuario);
         }
 
         public Usuario ObtenerUsuarioPor(string nombreUsuario, string password) 
