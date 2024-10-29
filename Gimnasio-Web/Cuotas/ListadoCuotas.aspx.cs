@@ -60,6 +60,8 @@ namespace Gimnasio_Web.Cuotas
                     return;
                 }
 
+                listaCuotas = cuotaNegocio.OrdenarCuotasSegun(listaCuotas, soloVencidas, soloProximasAVencerse);
+
                 CuotasGridView.DataSource = listaCuotas;
                 CuotasGridView.DataBind();
             }

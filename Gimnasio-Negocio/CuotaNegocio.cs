@@ -174,5 +174,20 @@ namespace Gimnasio_Negocio
 
             return fechaVencimiento;
         }
+
+        public List<Cuota> OrdenarCuotasSegun(List<Cuota> listaCuotas, bool soloVencidas, bool soloProximasAVencerse) 
+        {
+            if (soloVencidas) 
+            {
+                return listaCuotas.OrderBy(c => c.FechaVencimiento).ToList();
+            }
+
+            if (soloProximasAVencerse) 
+            {
+                return listaCuotas.OrderByDescending(c => c.FechaVencimiento).ToList();
+            }
+
+            return listaCuotas.OrderByDescending(c => c.FechaPago).ToList();
+        }
     }
 }
