@@ -53,6 +53,15 @@ namespace Gimnasio_Web
         }
 
         //-------------------------------------------------- EVENTOD ------------------------------------------------------------------------------------------
+        protected void CerrarSesionButton_ServerClick(object sender, EventArgs e)
+        {
+            Session.RemoveAll();
+            Session.Clear();
+            Session.Abandon();
+
+            Response.Redirect("Login.aspx");
+        }
+
         protected void CambiarEstadoSocioButton_Click(object sender, EventArgs e)
         {
             if (Page is ListadoSocios listadoSociosPagina)
