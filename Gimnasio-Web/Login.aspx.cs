@@ -1,6 +1,5 @@
 ﻿using Gimnasio_Dominio;
 using Gimnasio_Negocio;
-using Gimnasio_Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;

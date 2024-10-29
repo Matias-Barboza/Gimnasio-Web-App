@@ -5,9 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Gimnasio_Dominio;
-using Gimnasio_Utilidades;
+using Gimnasio_Negocio;
 using Gimnasio_Web.Cuotas;
 using Gimnasio_Web.Socios;
+using Gimnasio_Web.Utilidades;
 
 namespace Gimnasio_Web
 {

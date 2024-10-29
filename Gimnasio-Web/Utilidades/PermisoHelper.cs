@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
 
-namespace Gimnasio_Utilidades
+namespace Gimnasio_Web.Utilidades
 {
     public class PermisoHelper
     {

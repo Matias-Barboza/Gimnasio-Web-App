@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gimnasio_Utilidades
+namespace Gimnasio_Negocio
 {
     public class Seguridad
     {

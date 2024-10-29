@@ -81,7 +81,7 @@
                                     <a href="/Cuotas/ListadoCuotas.aspx?estado=proximas" class="list-group-item list-group-item-action ps-5"><i class="bi bi-3-circle pe-1"></i>Listado de cuotas próximas a vencerse</a>
                                     <a href="/Cuotas/FormularioCuota.aspx" class="list-group-item list-group-item-action ps-5"><i class="bi bi-4-circle pe-1"></i>Registrar cuota</a>
                                     <a href="/Cuotas/ListadoTiposCuota.aspx?estado=activas" class="list-group-item list-group-item-action ps-5"><i class="bi bi-6-circle pe-1"></i>Tipos de cuota activas</a>
-                                    <%if (Gimnasio_Utilidades.Seguridad.UsuarioEsAdmin((Gimnasio_Dominio.Usuario)Session["UsuarioSessionActual"])) {%>
+                                    <%if (Gimnasio_Negocio.Seguridad.UsuarioEsAdmin((Gimnasio_Dominio.Usuario)Session["UsuarioSessionActual"])) {%>
                                     <a href="/Cuotas/ListadoTiposCuota.aspx" class="list-group-item list-group-item-action ps-5"><i class="bi bi-5-circle pe-1"></i>Tipos de cuota</a>
                                     <a href="/Cuotas/FormularioTipoCuota.aspx" class="list-group-item list-group-item-action ps-5"><i class="bi bi-7-circle pe-1"></i>Agregar tipo de cuota</a>
                                     <%}%>
@@ -90,7 +90,7 @@
                             </div>
                           </div>
 
-                          <%if (Gimnasio_Utilidades.Seguridad.UsuarioEsAdmin((Gimnasio_Dominio.Usuario)Session["UsuarioSessionActual"]))
+                          <%if (Gimnasio_Negocio.Seguridad.UsuarioEsAdmin((Gimnasio_Dominio.Usuario)Session["UsuarioSessionActual"]))
                             {%>
                           <div class="accordion-item">
                               <h2 class="accordion-header">
