@@ -60,7 +60,9 @@ namespace Gimnasio_Web.Cuotas
             {
                 AuditoriaTipoCuotaNegocio auditoriaTipoCuotaNegocio = new AuditoriaTipoCuotaNegocio();
                 List<AuditoriaTipoCuota> listaAuditoriasTipoCuota = auditoriaTipoCuotaNegocio.ObtenerAuditoriasConDescripcionYUsuarioPorIdTipoCuota(idTipoCuota);
-                listaAuditoriasTipoCuota = listaAuditoriasTipoCuota.OrderByDescending(a => a.FechaCambio).ToList();
+                listaAuditoriasTipoCuota = listaAuditoriasTipoCuota.OrderByDescending(a => a.Id)
+                                                                   .ThenBy(a => a.FechaCambio)
+                                                                   .ToList();
 
                 if (listaAuditoriasTipoCuota.Count == 0)
                 {
