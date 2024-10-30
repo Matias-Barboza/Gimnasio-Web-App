@@ -16,9 +16,9 @@ namespace Gimnasio_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["UsuarioSessionActual"] == null) 
+            if (!PermisoHelper.HaySesionIniciada(Session)) 
             {
-                // Debe redirigir
+                Response.Redirect("/Login.aspx");
                 return;
             }
 
@@ -53,14 +53,14 @@ namespace Gimnasio_Web
             }
         }
 
-        //-------------------------------------------------- EVENTOD ------------------------------------------------------------------------------------------
+        //-------------------------------------------------- EVENTOS ------------------------------------------------------------------------------------------
         protected void CerrarSesionButton_ServerClick(object sender, EventArgs e)
         {
             Session.RemoveAll();
             Session.Clear();
             Session.Abandon();
 
-            Response.Redirect("Login.aspx");
+            Response.Redirect("/Login.aspx");
         }
 
         protected void CambiarEstadoSocioButton_Click(object sender, EventArgs e)
