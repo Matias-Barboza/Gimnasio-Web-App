@@ -37,12 +37,12 @@
                   <div class="offcanvas-body px-0 pt-0">
                         <div class="list-group list-group-flush">
                           <a href="/Default.aspx" class="list-group-item list-group-item-action py-3 px-4 border-bottom">
-                            <i class="bi bi-house"></i>
+                            <i class="bi bi-house-fill"></i>
                             INICIO
                           </a>
                         </div>
                         <div class="list-group list-group-flush">
-                          <a href="#" class="list-group-item list-group-item-action py-3 px-4 border-bottom">
+                          <a href="/Usuarios/MiPerfil.aspx" class="list-group-item list-group-item-action py-3 px-4 border-bottom">
                             <i class="bi bi-person-circle"></i>
                             MI PERFIL
                           </a>
@@ -102,7 +102,21 @@
                                 <div class="accordion-body p-0">
                                    <div class="list-group list-group-flush">
                                       <a href="#" class="list-group-item list-group-item-action ps-5"><i class="bi bi-1-circle pe-1"></i>Listado de profesores</a>
-                                      <a href="#" class="list-group-item list-group-item-action ps-5 border-bottom"><i class="bi bi-2-circle pe-1"></i>Registrar profesor</a>
+                                   </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                              <h2 class="accordion-header">
+                                <button class="accordion-button collapsed px-4 border-bottom" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                  <i class="bi bi-person-lines-fill pe-1"></i> USUARIOS
+                                </button>
+                              </h2>
+                              <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                   <div class="list-group list-group-flush">
+                                      <a href="/Usuarios/FormularioUsuario.aspx" class="list-group-item list-group-item-action ps-5 border-bottom"><i class="bi bi-1-circle pe-1"></i>Registrar usuario</a>
                                    </div>
                                 </div>
                               </div>
