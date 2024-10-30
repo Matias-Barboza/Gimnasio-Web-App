@@ -110,6 +110,9 @@ namespace Gimnasio_Web.Cuotas
             {
                 TipoCuotaNegocio tipoCuotaNegocio = new TipoCuotaNegocio();
                 TipoCuota tipoCuota = new TipoCuota();
+                AuditoriaTipoCuotaNegocio auditoriaTipoCuotaNegocio = new AuditoriaTipoCuotaNegocio();
+                AuditoriaTipoCuota ultimaAuditoria = new AuditoriaTipoCuota();
+                Usuario usuarioModificador = (Usuario)Session["UsuarioSessionActual"];
 
                 if (!Page.IsValid)
                 {
@@ -121,6 +124,11 @@ namespace Gimnasio_Web.Cuotas
                 VincularDatosATipoCuota(tipoCuota);
 
                 tipoCuotaNegocio.ActualizarMontoTipoCuota(tipoCuota);
+
+                ultimaAuditoria = auditoriaTipoCuotaNegocio.ObtenerUltimaAuditoriaPorIdTipoCuota(tipoCuota.Id);
+
+                auditoriaTipoCuotaNegocio.ActualizarIdUsuarioAuditoria(ultimaAuditoria, usuarioModificador.Id);
+
 
                 Response.Redirect("/Cuotas/ListadoTiposCuota.aspx", false);
             }
