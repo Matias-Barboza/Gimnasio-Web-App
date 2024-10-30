@@ -1,5 +1,6 @@
 ﻿using Gimnasio_Dominio;
 using Gimnasio_Negocio;
+using Gimnasio_Web.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,15 @@ namespace Gimnasio_Web.Cuotas
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString.Count == 0) 
+            {
+                if (!Seguridad.UsuarioEsAdmin((Usuario)Session["UsuarioSessionActual"]))
+                {
+                    Response.Redirect("/Cuotas/ListadoTiposCuota.aspx?estado=activas");
+                    return;
+                }
+            }
+
             if (Request.QueryString.Count != 0) 
             {
                 if (Request["estado"] == "activas") 
@@ -50,7 +60,16 @@ namespace Gimnasio_Web.Cuotas
                     return;
                 }
 
+
                 TiposCuotasGridView.DataSource = listaTiposCuota;
+                
+                if (!Seguridad.UsuarioEsAdmin((Usuario)Session["UsuarioSessionActual"])) 
+                {
+                    TiposCuotasGridView.Columns[5].Visible = false;
+                    TiposCuotasGridView.Columns[6].Visible = false;
+                    TiposCuotasGridView.Columns[7].Visible = false;
+                }
+
                 TiposCuotasGridView.DataBind();
             }
             catch (Exception ex)
