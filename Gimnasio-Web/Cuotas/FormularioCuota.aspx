@@ -52,13 +52,14 @@
                                 <asp:TextBox ID="ApellidoSocioTextBox" CssClass="form-control" runat="server" ></asp:TextBox>
                             </div>
                             <div class="col ms-2 mb-1">
-                                <label for="ApellidoSocioTextBox" class="ms-1 mb-1">Activo</label>
+                                <label for="EstaActivoCheckBox" class="ms-1 mb-1">Activo</label>
                                 <div class="d-flex justify-content-center">
                                     <input id="EstaActivoCheckBox" type="checkbox" disabled="disabled" class="form-check-input checkbox-xl position-relative top-12-px mt-0" runat="server" />
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex">
+                            <%-- Validators --%>
                             <asp:CustomValidator ID="SocioBuscadoValidator" ErrorMessage="Debe buscar un socio a asociar para poder registrar la cuota."
                                    OnServerValidate="SocioBuscadoValidator_ServerValidate" ValidationGroup="OperacionValidationGroup" Display="Dynamic" CssClass="validator ms-2 mb-3"  runat="server" />
                             <asp:CustomValidator ID="DatosSocioBuscadoValidator" ErrorMessage="Los datos actuales no coinciden con el último socio buscado, realice la búsqueda nuevamente."

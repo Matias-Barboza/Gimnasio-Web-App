@@ -21,7 +21,7 @@
                         <hr class="mt-0" />
                         <div class="d-flex">
                             <div class="col mb-1 me-2">
-                                <label for="DescripcionTextBox" class="form-label">Descripción</label>
+                                <label for="DescripcionTextBox" class="form-label">Descripción<span class="text-danger">*</span></label>
                                 <asp:TextBox ID="DescripcionTextBox" PlaceHolder="Ej: Diaria" CssClass="form-control" runat="server"></asp:TextBox>
                                 <div>
                                     <%-- Validators --%>
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                             <div class="col mx-2 mb-1">
-                                <label for="CantidadDiasTextBox" class="form-label">Cantidad de días</label>
+                                <label for="CantidadDiasTextBox" class="form-label">Cantidad de días<span class="text-danger">*</span></label>
                                 <asp:TextBox ID="CantidadDiasTextBox" PlaceHolder="Días que dura la membresía" CssClass="form-control" runat="server"></asp:TextBox>
                                 <div>
                                     <%-- Validators --%>
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="col mx-2 mb-1">
-                                <label for="MontoTextBox" class="form-label">Monto actual</label>
+                                <label for="MontoTextBox" class="form-label">Monto actual<span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <asp:TextBox ID="MontoTextBox" PlaceHolder="Ej: 2000.00" CssClass="form-control" runat="server"></asp:TextBox>
