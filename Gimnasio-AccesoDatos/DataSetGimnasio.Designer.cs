@@ -7455,12 +7455,26 @@ SELECT id, id_tipo_cuota, id_usuario, valor_anterior, valor_nuevo, fecha_cambio 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT id, id_tipo_cuota, id_usuario, valor_anterior, valor_nuevo, fecha_cambio F" +
                 "ROM dbo.auditoria_valor_tipos_cuota";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "UPDATE auditoria_valor_tipos_cuota\r\nSET id_usuario = @idUsuario\r\nWHERE id = @idAu" +
+                "ditoria";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idUsuario", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_usuario", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idAuditoria", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "SELECT TOP 1 id, id_tipo_cuota, id_usuario, valor_anterior, valor_nuevo, fecha_ca" +
+                "mbio\r\nFROM dbo.auditoria_valor_tipos_cuota\r\nWHERE id_tipo_cuota = @idTipoCuota\r\n" +
+                "ORDER BY id DESC, fecha_cambio DESC";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idTipoCuota", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id_tipo_cuota", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7482,6 +7496,23 @@ SELECT id, id_tipo_cuota, id_usuario, valor_anterior, valor_nuevo, fecha_cambio 
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSetGimnasio.AuditoriaValorTiposCuotaDataTable ObtenerAuditorias() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            DataSetGimnasio.AuditoriaValorTiposCuotaDataTable dataTable = new DataSetGimnasio.AuditoriaValorTiposCuotaDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual DataSetGimnasio.AuditoriaValorTiposCuotaDataTable ObtenerUltimaAuditoriaPorIdTipoCuota(global::System.Nullable<int> idTipoCuota) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((idTipoCuota.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(idTipoCuota.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             DataSetGimnasio.AuditoriaValorTiposCuotaDataTable dataTable = new DataSetGimnasio.AuditoriaValorTiposCuotaDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -7728,6 +7759,36 @@ SELECT id, id_tipo_cuota, id_usuario, valor_anterior, valor_nuevo, fecha_cambio 
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(global::System.Nullable<int> id_tipo_cuota, global::System.Nullable<int> id_usuario, global::System.Nullable<decimal> valor_anterior, global::System.Nullable<decimal> valor_nuevo, global::System.Nullable<global::System.DateTime> fecha_cambio, int Original_id, global::System.Nullable<int> Original_id_tipo_cuota, global::System.Nullable<int> Original_id_usuario, global::System.Nullable<decimal> Original_valor_anterior, global::System.Nullable<decimal> Original_valor_nuevo, global::System.Nullable<global::System.DateTime> Original_fecha_cambio) {
             return this.Update(id_tipo_cuota, id_usuario, valor_anterior, valor_nuevo, fecha_cambio, Original_id, Original_id_tipo_cuota, Original_id_usuario, Original_valor_anterior, Original_valor_nuevo, Original_fecha_cambio, Original_id);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
+        public virtual int ActualizarIdUsuarioAuditoria(global::System.Nullable<int> idUsuario, int idAuditoria) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            if ((idUsuario.HasValue == true)) {
+                command.Parameters[0].Value = ((int)(idUsuario.Value));
+            }
+            else {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            command.Parameters[1].Value = ((int)(idAuditoria));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
         }
     }
     
