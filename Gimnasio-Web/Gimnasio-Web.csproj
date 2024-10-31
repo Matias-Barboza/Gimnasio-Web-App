@@ -77,6 +77,8 @@
     <Content Include="Login.aspx" />
     <Content Include="Socios\FormularioSocio.aspx" />
     <Content Include="Socios\ListadoSocios.aspx" />
+    <Content Include="Usuarios\FormularioUsuario.aspx" />
+    <Content Include="Usuarios\MiPerfil.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +156,20 @@
     <Compile Include="Socios\ListadoSocios.aspx.designer.cs">
       <DependentUpon>ListadoSocios.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Usuarios\FormularioUsuario.aspx.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\FormularioUsuario.aspx.designer.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\MiPerfil.aspx.cs">
+      <DependentUpon>MiPerfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\MiPerfil.aspx.designer.cs">
+      <DependentUpon>MiPerfil.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Utilidades\PermisoHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +183,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Gimnasio-Dominio\Gimnasio-Dominio.csproj">
       <Project>{7a640be2-a7fc-4081-b54f-70be4b4cbf6d}</Project>
       <Name>Gimnasio-Dominio</Name>
@@ -175,9 +194,6 @@
       <Project>{447c713d-f6b0-4616-a243-e61b18dbb886}</Project>
       <Name>Gimnasio-Negocio</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

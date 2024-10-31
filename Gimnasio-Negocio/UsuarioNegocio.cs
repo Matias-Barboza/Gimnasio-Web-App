@@ -12,7 +12,19 @@ namespace Gimnasio_Negocio
 {
     public class UsuarioNegocio
     {
-        public bool ExisteUsuario(Usuario usuario) 
+        public bool AñadirUsuario(Usuario usuario) 
+        {
+            UsuariosTableAdapter usuariosTableAdapter = new UsuariosTableAdapter();
+
+            return usuariosTableAdapter.AñadirUsuario(usuario.Nombre,
+                                                      usuario.Apellido,
+                                                      usuario.NombreUsuario,
+                                                      usuario.Password,
+                                                      usuario.EsAdmin,
+                                                      usuario.EsProfesor) == 1;
+        }
+
+        public bool ExisteNombreUsuario(Usuario usuario) 
         {
             UsuariosTableAdapter usuariosTableAdapter = new UsuariosTableAdapter();
             DataTable usuariosDataTable = usuariosTableAdapter.ObtenerNombresUsuarios(usuario.NombreUsuario);
