@@ -1,5 +1,6 @@
 ﻿using Gimnasio_Dominio;
 using Gimnasio_Web.Cuotas;
+using Gimnasio_Web.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace Gimnasio_Web.Utilidades
 
         public static bool PaginaNecesitaPermisoAdmin(Page page) 
         {
-            return page is ListadosTiposCuota || page is FormularioTipoCuota || page is HistorialTipoCuota;
+            return page is ListadosTiposCuota || page is FormularioTipoCuota || page is HistorialTipoCuota || 
+                   page is ListadoUsuarios || page is FormularioUsuario;
         }
     }
 }

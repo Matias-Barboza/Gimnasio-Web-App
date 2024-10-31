@@ -28,7 +28,8 @@ namespace Gimnasio_Web
             {
                 if (!Seguridad.UsuarioEsAdmin(usuario)) 
                 {
-                    // Debe redirigir
+                    // Debe redirigir (Por ahora al default)
+                    Response.Redirect("/Default.aspx");
                     return;
                 }
             }

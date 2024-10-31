@@ -78,6 +78,7 @@
     <Content Include="Socios\FormularioSocio.aspx" />
     <Content Include="Socios\ListadoSocios.aspx" />
     <Content Include="Usuarios\FormularioUsuario.aspx" />
+    <Content Include="Usuarios\ListadoUsuarios.aspx" />
     <Content Include="Usuarios\MiPerfil.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -162,6 +163,13 @@
     </Compile>
     <Compile Include="Usuarios\FormularioUsuario.aspx.designer.cs">
       <DependentUpon>FormularioUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\ListadoUsuarios.aspx.cs">
+      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\ListadoUsuarios.aspx.designer.cs">
+      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios\MiPerfil.aspx.cs">
       <DependentUpon>MiPerfil.aspx</DependentUpon>
