@@ -4684,7 +4684,7 @@ SELECT id, nombre_usuario, password, es_admin, es_profesor, nombre, apellido FRO
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[6];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT id, nombre_usuario, password, es_admin, es_profesor, nombre, apellido FROM" +
@@ -4721,6 +4721,15 @@ SELECT id, nombre_usuario, password, es_admin, es_profesor, nombre, apellido FRO
                 " usuarios WHERE (id = @id)";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[5].Connection = this.Connection;
+            this._commandCollection[5].CommandText = @"SELECT id, nombre_usuario, es_admin, es_profesor, nombre, apellido FROM usuarios
+WHERE nombre_usuario LIKE @campoBusqueda OR
+              nombre LIKE @campoBusqueda OR
+              apellido LIKE @campoBusqueda OR
+              CONCAT(nombre, ' ', apellido) LIKE @campoBusqueda";
+            this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@campoBusqueda", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "nombre_usuario", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4781,6 +4790,23 @@ SELECT id, nombre_usuario, password, es_admin, es_profesor, nombre, apellido FRO
         public virtual DataSetGimnasio.UsuariosDataTable ObtenerUsuarioPorId(int id) {
             this.Adapter.SelectCommand = this.CommandCollection[4];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(id));
+            DataSetGimnasio.UsuariosDataTable dataTable = new DataSetGimnasio.UsuariosDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual DataSetGimnasio.UsuariosDataTable ObtenerUsuariosPor(string campoBusqueda) {
+            this.Adapter.SelectCommand = this.CommandCollection[5];
+            if ((campoBusqueda == null)) {
+                throw new global::System.ArgumentNullException("campoBusqueda");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(campoBusqueda));
+            }
             DataSetGimnasio.UsuariosDataTable dataTable = new DataSetGimnasio.UsuariosDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

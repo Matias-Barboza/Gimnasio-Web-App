@@ -131,6 +131,35 @@ namespace Gimnasio_Negocio
             return listaUsuarios;
         }
 
+        public List<Usuario> ObtenerUsuariosPor(bool soloProfesores = false, string campoBusqueda = null) 
+        {
+            UsuariosTableAdapter usuariosTableAdapter = new UsuariosTableAdapter();
+            DataTable usuariosDataTable = !string.IsNullOrEmpty(campoBusqueda) ? usuariosDataTable = usuariosTableAdapter.ObtenerUsuariosPor($"{campoBusqueda}%") :
+                                                                                 usuariosDataTable = usuariosTableAdapter.ObtenerUsuarios();
+            List<Usuario> listaUsuarios = new List<Usuario>();
+
+            foreach (DataSetGimnasio.UsuariosRow usuarioFila in usuariosDataTable.Rows)
+            {
+                Usuario usuario = new Usuario();
+
+                usuario.Id = usuarioFila.id;
+                usuario.NombreUsuario = usuarioFila.nombre_usuario;
+                usuario.Nombre = usuarioFila.nombre;
+                usuario.Apellido = usuarioFila.apellido;
+                usuario.EsAdmin = usuarioFila.es_admin;
+                usuario.EsProfesor = usuarioFila.es_profesor;
+
+                listaUsuarios.Add(usuario);
+            }
+
+            if (soloProfesores) 
+            {
+                listaUsuarios = listaUsuarios.Where(u => u.EsProfesor).ToList();
+            }
+
+            return listaUsuarios;
+        }
+
         //-------------------------------------------------- OTRAS FUNCIONALIDADES ----------------------------------------------------------------------------
         public bool InformacionCorrectaUsuario(Usuario usuarioAComprobar) 
         {
