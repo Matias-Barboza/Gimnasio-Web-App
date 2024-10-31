@@ -44,7 +44,7 @@ namespace Gimnasio_Web.Usuarios
 
                 usuarioNegocio.AñadirUsuario(usuario);
 
-                //Response.Redirect("/Usuarios/ListadoUsuarios.aspx");
+                Response.Redirect("/Usuarios/ListadoUsuarios.aspx");
             }
             catch (Exception)
             {
