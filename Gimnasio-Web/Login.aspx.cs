@@ -60,7 +60,7 @@ namespace Gimnasio_Web
                     NombreUsuario = UsuarioTextBox.Text
                 };
 
-                args.IsValid = usuarioNegocio.ExisteUsuario(usuario);
+                args.IsValid = usuarioNegocio.ExisteNombreUsuario(usuario);
             }
             catch (Exception)
             {
